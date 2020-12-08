@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href={{ url_for('static',filename='styles/estilo.css') }}>
+
+    <title>Brioche ☕ - Iniciar sesión</title>
+  </head>
+  <body>
+    <section class = "form-registro">
+      <center><img src={{ url_for('static', filename='images/usuario_profile_img.png') }} style="width: 50px; height:50px"></center>
+      <h4>Inicio de sesión</h4>
+      <input class="controls" type="text" name="usuario" id="nombre" placeholder="Usuario">
+      <input class="controls" type="password" name="contraseña" id="contraseña" placeholder="Contraseña">
+      <p><a href="recuperarCuenta.html">     Recuperar contraseña</a></p>
+      <br>
+      <input class="botons1" type="button" value="Acceder">
+    </section>
+  </body>
+</html>

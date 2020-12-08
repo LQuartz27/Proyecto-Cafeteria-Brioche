@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Brioche ☕ - Galería</title>
+    <link rel="stylesheet" href={{ url_for('static',filename='styles/estilos.css') }}>
+</head>
+
+<body>
+    <div class="principal">
+        <div class="principal-items">
+            <div class="usuario-foto" >
+                <img src={{ url_for('static', filename='images/usuario_profile_img.png') }} alt="Usuario">
+            </div>
+            <div class="usuario">Usuario</div>
+            <div class="brioche">Cafetería Brioche</div>
+            <div>
+                <a class="boton salir" href="inicio.html">Salir</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="cuerpo">
+        <div class="logo">
+            <img class="brioche-foto" src={{ url_for('static', filename='images/logo_brioche.png') }} alt="logo-brioche">
+        </div>
+        <div class="galeria">
+            <div class="galeria-cuadro">Galería de productos</div>
+            <div class="imagenes">
+
+                <div class="producto">
+                    <div class="nombre">Brownie</div>
+                    <div>
+                        <img class="imagen" src={{ url_for('static', filename='images/brownie.png') }} alt="Brownie">
+                    </div>
+                    <div class="abajo">
+                        <div class="precio">$ 5.000</div>
+                        <div class="cantidad">10</div>
+                    </div>
+                </div>
+
+                <div class="producto">
+                    <div class="nombre">Capuchino</div>
+                    <div>
+                        <img class="imagen" src={{ url_for('static', filename='images/late.png') }} alt="Café capuchino">
+                    </div>
+                    <div class="abajo">
+                        <div class="precio">$ 3.000</div>
+                        <div class="cantidad">50</div>
+                    </div>
+                </div>
+
+                <div class="producto">
+                    <div class="nombre">Cruasán</div>
+                    <div>
+                        <img class="imagen" src={{ url_for('static', filename='images/croissant.png') }} alt="Cruasán">
+                    </div>
+                    <div class="abajo">
+                        <div class="precio">$ 3.500</div>
+                        <div class="cantidad">22</div>
+                    </div>
+                </div>
+
+                <div class="producto">
+                    <div class="nombre">Pan con queso</div>
+                    <div>
+                        <img class="imagen" src={{ url_for('static', filename='images/pan_c.png') }} alt="Pan">
+                    </div>
+                    <div class="abajo">
+                        <div class="precio">$ 3.500</div>
+                        <div class="cantidad">18</div>
+                    </div>
+                </div>
+
+                <div class="producto">
+                    <div class="nombre">Coca Cola</div>
+                    <div>
+                        <img class="imagen" src={{ url_for('static', filename='images/coca_cola.png') }} alt="Coca Cola">
+                    </div>
+                    <div class="abajo">
+                        <div class="precio">$ 3.000</div>
+                        <div class="cantidad">42</div>
+                    </div>
+                </div>
+
+                <div class="producto">
+                    <div class="nombre">Dona Chocolate</div>
+                    <div>
+                        <img class="imagen" src={{ url_for('static', filename='images/dona.png') }} alt="Dona Chocolate">
+                    </div>
+                    <div class="abajo">
+                        <div class="precio">$ 4.500</div>
+                        <div class="cantidad">10</div>
+                    </div>
+                </div>
+
+                <div class="producto">
+                    <div class="nombre">Cupcake</div>
+                    <div>
+                        <img class="imagen" src={{ url_for('static', filename='images/cupcake.png') }} alt="Cupcake azul">
+                    </div>
+                    <div class="abajo">
+                        <div class="precio">$ 3.500</div>
+                        <div class="cantidad">15</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="botones">
+            <a class="boton aceptar" href="ventas.html">Aceptar</a>
+            <a class="boton cancelar" href="inicio.html">Cancelar</a>
+        </div>
+    </div>
+</body>
+</html>

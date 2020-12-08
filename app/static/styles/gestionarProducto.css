@@ -1,0 +1,226 @@
+:root {
+    --dark-blue: #383B54;
+    --green: #72BA9C;
+    --light-green: #CFE8C1;
+    --light-yellow: #FCF5C0;
+    --red: #E02F58;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    font-size: 62.5%;
+    font-family: Montserrat;
+}
+
+.header {
+    height: 15vh;
+    display: flex;
+    background-color: var(--dark-blue);
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.header img {
+    width: 4.5rem;
+}
+.header h1{
+    font-size: 3rem;
+}
+
+div.user-info{
+    margin: 0 10rem;
+    align-items: center;
+}
+.user-info a{
+    text-decoration: none;
+}
+.user-info .user-info-item{
+    display: inline;
+    /* vertical-align: middle; */
+    font-size: 2rem;
+    color: white;
+}
+.user-info h3{
+    position: relative;
+    bottom: 1rem;
+}
+
+.buttons-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    margin: 0 6rem;
+}
+.button {
+    width: 100%;
+    background-color: var(--red);
+    color: white;
+    border: 0;
+    border-radius: 1rem;
+    font-size: 2rem;
+    padding: 1rem;
+    font-family: inherit;
+}
+.button.go-back{
+    background-color: var(--green);
+    margin-bottom: 0.5rem;
+}
+.button.create{
+    background-color: var(--dark-blue);
+    margin-bottom: 0.5rem;
+}
+
+.main-container {
+    width: 100vw;
+    height: 85vh;
+    display: flex;
+    background-color: var(--light-green);
+}
+
+.main-container img{
+    width: 95%;
+}
+.main-container h3{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: normal;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25%;
+    height: 100%;
+    background-color: var(--green);
+    border-right: 2px solid var(--dark-blue);
+}
+
+.sidebar img{
+    width: 33%;
+    position: relative;
+    left: 35%;
+}
+
+.sidebar .button{
+    font-size: inherit;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width: inherit;
+    margin-top: 0.8rem;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--green);
+    border-radius: 8px;
+    padding: 3rem;
+    padding-bottom: 1rem;
+    color: white;
+    font-size: 2rem;
+}
+.form .button.non-critical{
+    background: var(--dark-blue);
+}
+.form label{
+    display: block;
+    margin: 0.3rem;
+}
+.form .flex-label{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.form input{
+    border-radius: 4px;
+    border: 1px;
+    width: 100%;
+    height: 3rem;
+}
+form span.foto-span {
+    display: inline-block;
+}
+
+.busqueda-container{
+    /* border: 2px dashed black; */
+    display: flex;
+    flex-direction: row;
+    width: 75%;
+    height: 10%;
+    align-items: center;
+    justify-content: center;
+}
+.busqueda-form{
+    display: flex;
+    flex-direction: row;
+    height: 80%;
+    width: 80%;
+    font-size: 2rem;
+    /* border: 1px dashed red; */
+    justify-content: center;
+    align-items: center;
+    /* padding-left: 5rem; */
+}
+.busqueda-form span{
+    font-size:2.5rem;
+    color: var(--green);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.busqueda-form img{
+    width: 1rem;
+    position: relative;
+    left: -2rem;
+}
+.busqueda-form label{
+    height: 70%;
+    width: 90%;
+    position: relative;
+    left:40%;
+}
+.producto-searchBar{
+    width:50%;
+    text-align: center;
+}
+.busqueda-form input{
+    height: 2.5rem;
+}
+.right-container {
+    width: 75%;
+}
+
+.gallery-container{
+    /* border: 2px dashed black; */
+    display: flex;
+    flex-wrap: wrap;
+    height: 90%;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: flex-start;
+}
+.gallery-container img{
+    width: 25%;
+}
+.gallery-container figure{
+    display: inline;
+    margin: 0;
+}
+
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}

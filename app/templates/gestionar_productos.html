@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href={{ url_for('static',filename='styles/gestionarProducto.css') }}>
+    <title>Brioche ☕ - Productos</title>
+</head>
+<body>
+    <header class="header">
+        <div class="user-info">
+            <a href="#">
+                <figure class="user-info-item">
+                    <img src={{ url_for('static', filename='images/usuario_profile_img.png') }} alt="Foto de perfil">
+                </figure>
+                <h3 class="username user-info-item">Usuario</h3>
+            </a>
+        </div>
+        <h1 class="window-title">Cafetería Brioche</h1>
+        <div class="buttons-container">
+            <button class="button go-back" onclick="window.location.href={{ url_for('show_admin_menu') }};">Regresar</button>
+            <button class="button log-out" onclick="window.location.href={{ url_for('show_main_menu') }};">Cerrar Sesion</button>
+        </div>
+    </header>
+    <main class="main-container">
+        <aside class="sidebar">
+            <form action="" class="form">
+                <h3>Gestionar Productos</h3>
+                <label for="referencia">
+                    <span>Número de referencia</span>
+                    <input type="text" name="referencia" id="referencia">
+                </label>
+                <label for="producto">
+                    <span>Nombre del producto</span>
+                    <input type="text" name="producto" id="producto">
+                </label>
+                <label for="precio">
+                    <span>Precio</span>
+                    <input type="text" name="precio" id="precio">
+                </label>
+                <label for="foto" class="flex-label">
+                    <span class="foto-span">Foto del producto</span>
+                    <label for="file-upload" class="custom-file-upload button non-critical">
+                        Examinar
+                    </label>
+                    <input id="file-upload" type="file"/>
+                    <!-- <button class="button non-critical">Examinar</button> -->
+                </label>
+
+                <button type="submit" class="button">Crear producto</button>
+                <button type="submit" class="button non-critical">Actualizar producto</button>
+                <button type="submit" class="button">Eliminar producto</button>
+            </form>
+            <figure>
+                <img src={{ url_for('static', filename='images/logo_brioche.png') }} alt="Brioche logo">
+            </figure>
+        </aside>
+        <div class="right-container">
+            <div class="busqueda-container">
+                <form action="POST" class="busqueda-form">
+                    <label for="busqueda">
+                        <span>Buscar</span>
+                        <input type="text" class="producto-searchBar" name="busqueda" id="busqueda" placeholder="Nombre o Numero de referencia">
+                        <img src={{ url_for('static', filename='images/lupa.png') }} alt="search icon">
+                    </label>
+                </form>
+            </div>
+            <div class="gallery-container">
+                <img src={{ url_for('static', filename='images/coca_cola.png') }} alt="producto 1">
+                <img src={{ url_for('static', filename='images/dona.png') }} alt="producto 2">
+                <img src={{ url_for('static', filename='images/croissant.png') }} alt="producto 3">
+                <img src={{ url_for('static', filename='images/late.png') }} alt="producto 4">
+                <img src={{ url_for('static', filename='images/pan.png') }} alt="producto 5">
+                <img src={{ url_for('static', filename='images/brownie.png') }} alt="producto 6">
+            </div>
+        </div>
+    </main>
+</body>
+</html>

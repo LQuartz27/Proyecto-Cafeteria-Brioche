@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href={{ url_for('static',filename='styles/crearCajero.css') }}>
+    
+    <title>Brioche ☕ - Reg. Cajero</title>
+</head>
+<body>
+    <header class="header">
+        <div class="user-info">
+            <a href={{ url_for('show_admin_menu') }}>
+                <figure class="user-info-item">
+                    <img src={{ url_for('static', filename='images/usuario_profile_img.png') }} alt="Foto de perfil">
+                </figure>
+                <h3 class="username user-info-item">Usuario</h3>
+            </a>
+        </div>
+        <h1 class="window-title">Cafetería Brioche</h1>
+        <div class="buttons-container">
+            <button class="button go-back" onclick="window.location.href={{ url_for('show_admin_menu') }};">Regresar</button>
+            <button class="button log-out" onclick="window.location.href={{ url_for('show_main_menu') }};">Cerrar Sesion</button>
+        </div>
+    </header>
+    <main class="main-container">
+        <div class="panel">
+            <figure>
+                <img src={{ url_for('static', filename='images/logo_brioche.png') }} alt="Brioche logo">
+            </figure>
+        </div>
+        <div class="form-container">
+            <form action="" class="form">
+                <h3>Nuevo Cajero</h3>
+                <label for="username">
+                    <span>Nombre de usuario</span>
+                    <input type="text" name="username" id="username">
+                </label>
+                <label for="password">
+                    <span>Contraseña</span>
+                    <input type="text" name="password" id="password">
+                </label>
+                <label for="email">
+                    <span>Correo electrónico</span>
+                    <input type="email" name="email" id="email">
+                </label>
+                <div class="buttons-container">
+                    <button type="submit" class="button create">Crear cajero</button>
+                    <button type="reset" class="button cancel">Cancelar</button>
+                </div>
+            </form>
+        </div>
+        <div class="panel">
+            <figure>
+                <img class="circle-image" src={{ url_for('static', filename='images/cashier.jpg') }} alt="cajero_img">
+            </figure>
+        </div>
+    </main>
+</body>
+</html>

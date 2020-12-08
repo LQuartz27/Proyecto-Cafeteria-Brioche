@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Brioche ☕ - Ventas</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href={{ url_for('static',filename='styles/EstilosC.css') }}>
+
+<style>
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="principal">
+        <div class="principal-items">
+            <div class="usuario-foto" >
+                <img src={{ url_for('static', filename='images/usuario_profile_img.png') }} alt="Foto perfil">
+            </div>
+            <div class="usuario">Usuario</div>
+            <div class="brioche">Cafetería Brioche</div>
+            <div>
+                <a class="boton salir" href="inicio.html">Salir</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+<center>
+<section>
+<div class="lateral">
+<br>
+<br>
+    <table width="90%" border="0">
+      <tr>
+        <td class="busqueda" colspan="2"><strong>Buscar</strong></td>
+        </tr>
+      <tr>
+      
+
+        <td colspan="2"><input class="tbbuscar" id="buscar" type="text"/></td>
+        </tr>
+      <tr>
+        <td width="50%" height="28" align="center" valign="bottom" class="busqueda">Croissant</td>
+        <td width="50%" align="center" valign="bottom" class="busqueda">Latte</td>
+        </tr>
+      <tr>
+        <td align="center" valign="middle"><img src={{ url_for('static', filename='images/croissant.png') }} alt="Croissant" class="prod"></td>
+        <td align="center" valign="middle"><img src={{ url_for('static', filename='images/late.png') }} alt="Late" class="prod"></td>
+      </tr>
+      <tr>
+        <td height="25" align="center" valign="bottom" class="busqueda">Brownie</td>
+        <td align="center" valign="bottom">&nbsp;</td>
+      </tr>
+      <tr>
+        <td align="center" valign="middle"><img src={{ url_for('static', filename='images/brownie.png') }} alt="Brownie" class="prod"></td>
+        <td align="center" valign="middle">&nbsp;</td>
+      </tr>
+    </table>
+</div>
+
+<div class="central">
+
+<div align="center" class="formulario">
+
+<form>
+    <label for="fname"><br>
+      <p1 class="nuevaVenta"> Nueva venta</p1> 
+      <br>
+      <br></label>
+
+    <table width="98%" border="0">
+      <tr>
+        <td width="7%"><em>Fecha</em></td>
+        <td width="21%"><input class="tbprot" type="text" id="fecha"></td>
+        <td width="24%">&nbsp;</td>
+        <td colspan="2" align="right"><em>Factura Número </em></td>
+        <td width="25%"><input class="tbprot" type="text" id="factura"></td>
+      </tr>
+      <tr>
+        <td colspan="3" valign="bottom"><em>Nombre Cliente</em></td>
+        <td width="8%">&nbsp;</td>
+        <td width="15%" align="right"><em>Usuario</em></td>
+        <td><input class="tbprot" type="text" id="ref8"></td>
+      </tr>
+      <tr>
+        <td colspan="3"><input class="tbcant" type="text" id="ref9"></td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+    <br>
+    <table width="98%" border="0">
+      <tr>
+        <td width="9%" scope="col"><em>Cant</em>
+          </th>
+        <td width="9%" scope="col"><em>Ref.</em>
+          </th>
+        <td width="46%" scope="col"><em>Nombre del Producto</em>
+          </th>
+        <td width="18%" scope="col"><em>Valor Unit.</em>
+          </th>
+        <td width="18%" scope="col"><em>Valor Total</em>
+          </th>        </tr>
+      <tr>
+        <td><input class="tbcant" type="number" id="cant1"></td>
+        <td><input class="tbcant" type="text" id="ref1"></td>
+        <td><input class="tbtxt" type="text" id="prod1"></td>
+        <td><input class="tbcant" type="number" id="unit1"></td>
+        <td><input class="tbcant" type="number" id="total1"></td>
+      </tr>
+      <tr>
+        <td><input class="tbcant" type="number" id="cant2"></td>
+        <td><input class="tbcant" type="text" id="ref2"></td>
+        <td><input class="tbtxt" type="text" id="prod2"></td>
+        <td><input class="tbcant" type="number" id="unit2"></td>
+        <td><input class="tbcant" type="number" id="total2"></td>
+      </tr>
+      <tr>
+        <td><input class="tbcant" type="number" id="cant3"></td>
+        <td><input class="tbcant" type="text" id="ref3"></td>
+        <td><input class="tbtxt" type="text" id="prod3"></td>
+        <td><input class="tbcant" type="number" id="unit3"></td>
+        <td><input class="tbcant" type="number" id="total3"></td>
+      </tr>
+      <tr>
+        <td><input class="tbcant" type="number" id="cant4"></td>
+        <td><input class="tbcant" type="text" id="ref4"></td>
+        <td><input class="tbtxt" type="text" id="prod4"></td>
+        <td><input class="tbcant" type="number" id="unit4"></td>
+        <td><input class="tbcant" type="number" id="total4"></td>
+      </tr>
+      <tr>
+        <td><input class="tbcant" type="number" id="cant5"></td>
+        <td><input class="tbcant" type="text" id="ref5"></td>
+        <td><input class="tbtxt" type="text" id="prod5"></td>
+        <td><input class="tbcant" type="number" id="unit5"></td>
+        <td><input class="tbcant" type="number" id="total5"></td>
+      </tr>
+      <tr>
+        <td><input class="tbcant" type="number" id="cant5"></td>
+        <td><input class="tbcant" type="text" id="ref5"></td>
+        <td><input class="tbtxt" type="text" id="prod5"></td>
+        <td><input class="tbcant" type="number" id="unit5"></td>
+        <td><input class="tbcant" type="number" id="total5"></td>
+      </tr>
+      <tr>
+        <td><input class="tbcant" type="number" id="cant5"></td>
+        <td><input class="tbcant" type="text" id="ref5"></td>
+        <td><input class="tbtxt" type="text" id="prod5"></td>
+        <td><input class="tbcant" type="number" id="unit5"></td>
+        <td><input class="tbcant" type="number" id="total5"></td>
+      </tr>
+      <tr>
+        <td><input class="tbcant" type="number" id="cant5"></td>
+        <td><input class="tbcant" type="text" id="ref5"></td>
+        <td><input class="tbtxt" type="text" id="prod5"></td>
+        <td><input class="tbcant" type="number" id="unit5"></td>
+        <td><input class="tbcant" type="number" id="total5"></td>
+      </tr>
+      <tr>
+        <td><input class="tbcant" type="number" id="cant5"></td>
+        <td><input class="tbcant" type="text" id="ref5"></td>
+        <td><input class="tbtxt" type="text" id="prod5"></td>
+        <td><input class="tbcant" type="number" id="unit5"></td>
+        <td><input class="tbcant" type="number" id="total5"></td>
+      </tr>
+      <tr>
+        <td><input class="tbcant" type="number" id="cant5"></td>
+        <td><input class="tbcant" type="text" id="ref5"></td>
+        <td><input class="tbtxt" type="text" id="prod5"></td>
+        <td><input class="tbcant" type="number" id="unit5"></td>
+        <td><input class="tbcant" type="number" id="total5"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td align="right"><em>Subtotal: </em></td>
+        <td><input class="tbprot" type="number" id="valorSub"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td align="right"><em>IVA: </em></td>
+        <td><input class="tbprot" type="number" id="valorIva"></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td align="right"><em>Total: </em></td>
+        <td><input class="tbprot" type="number" id="valorTotal"></td>
+      </tr>
+      
+    </table>
+    <br>
+  </form>
+  
+</div>
+</div>
+
+<div class="lateral">
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<table width="174" border="0" align="left">
+  <tr>
+    <td><input type="submit" class="registrar" value="Registrar"></td>
+  </tr>
+  <tr>
+    <td "><input type="submit" class="salir1" value="Cancelar"></td>
+  </tr>
+</table>
+<br><br>
+<center>
+</center>
+<br>
+<br>
+</div>
+
+</section>
+</center>
+
+<footer>
+
+</footer>
+
+</body>
+</html>
