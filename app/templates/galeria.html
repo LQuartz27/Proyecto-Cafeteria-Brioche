@@ -1,24 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Brioche ☕ - Galería</title>
-    <link rel="stylesheet" href={{ url_for('static',filename='styles/estilos.css') }}>
-</head>
+{% extends "template.html" %}
 
-<body>
-    <div class="principal">
-        <div class="principal-items">
-            <div class="usuario-foto" >
-                <img src={{ url_for('static', filename='images/usuario_profile_img.png') }} alt="Usuario">
-            </div>
-            <div class="usuario">Usuario</div>
-            <div class="brioche">Cafetería Brioche</div>
-            <div>
-                <a class="boton salir" href="{{ url_for('show_main_menu') }}">Salir</a>
-            </div>
-        </div>
-    </div>
+{% block title %}Brioche ☕ - Galería{% endblock %}
+
+{% block body %}
 
     <div class="cuerpo">
         <div class="logo">
@@ -108,8 +92,8 @@
         </div>
         <div class="botones">
             <a class="boton aceptar" href="{{ url_for('vender') }}">Aceptar</a>
-            <a class="boton cancelar" href="{{ url_for('show_main_menu') }}">Cancelar</a>
+            <a class="boton cancelar" href="{{ url_for('vender') }}">Cancelar</a>
         </div>
     </div>
-</body>
-</html>
+
+{% endblock %}

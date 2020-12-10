@@ -1,24 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Brioche ☕ - Administrador</title>
-    <link rel="stylesheet" href={{ url_for('static',filename='styles/estilos.css') }}>
+{%  extends "template.html" %}
 
-</head>
-<body>
-    <div class="principal">
-        <div class="principal-items">
-            <div class="usuario-foto" >
-                <img src={{ url_for('static', filename='images/usuario_profile_img.png') }} alt="Usuario_img">
-            </div>
-            <div class="usuario">Usuario</div>
-            <div class="brioche">Cafetería Brioche</div>
-            <div>
-                <a class="boton salir" href="{{ url_for('show_main_menu') }}">Salir</a>
-            </div>
-        </div>
-    </div>
+{%  block title %}Brioche ☕ - Administrador{% endblock %}
+
+{% block body %}
 
     <div class="cuerpo cuerpo-admin">
         <div class="logo">
@@ -43,5 +27,5 @@
             <a class="boton aceptar-admin" href="{{ url_for('crear_cajero') }}">Crear Cajero</a>
         </div>
     </div>
-</body>
-</html>
+
+{% endblock %}
