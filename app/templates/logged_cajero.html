@@ -14,7 +14,7 @@
             <div class="usuario">Usuario</div>
             <div class="brioche">Cafetería Brioche</div>
             <div>
-                <a class="boton salir" href="inicio.html">Salir</a>
+                <a class="boton salir" href="{{ url_for('show_main_menu') }}">Salir</a>
             </div>
         </div>
     </div>
@@ -28,13 +28,13 @@
                  <a href="ventas.html">
                     <img class="brioche-foto" src={{ url_for('static', filename='images/factura.png') }} alt="Facturas">
                  </a>
-                <a class="boton aceptar-admin" href="ventas.html">Registrar Venta</a>
+                <a class="boton aceptar-admin" href="{{ url_for('vender') }}">Registrar Venta</a>
             </div>
             <div class="seleccion">
-                <a href="cambio-constrasena.html">
+                <a href="{{ url_for('cambiar_clave') }}">
                     <img class="brioche-foto" src={{ url_for('static', filename='images/candado.png') }} alt="Candado y llave">
                 </a>
-                <a class="boton aceptar-admin" href="cambio-constrasena.html">Cambiar Contraseña</a>
+                <a class="boton aceptar-admin" href="{{ url_for('cambiar_clave') }}">Cambiar Contraseña</a>
             </div>
         </div>
     </div>

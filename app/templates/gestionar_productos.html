@@ -18,8 +18,8 @@
         </div>
         <h1 class="window-title">Cafetería Brioche</h1>
         <div class="buttons-container">
-            <button class="button go-back" onclick="window.location.href={{ url_for('show_admin_menu') }};">Regresar</button>
-            <button class="button log-out" onclick="window.location.href={{ url_for('show_main_menu') }};">Cerrar Sesion</button>
+            <a class="button go-back" href="{{ url_for('show_admin_menu') }}">Regresar</a>
+            <a class="button log-out" href="{{ url_for('show_main_menu') }}">Cerrar Sesion</a>
         </div>
     </header>
     <main class="main-container">

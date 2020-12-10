@@ -15,17 +15,3 @@ El aplicativo facilitará a una cafetería, en este caso la Cafetería Brioche, 
 ... En desarrollo ...
 
 
-
-
-## Misc
-Crear La carpeta de virtualización "ENV" en una ubicación fuera del proyecto (ej: D:\env).
-
-cd ...\Proyecto-Cafeteria-Brioche\app
-
-virtualenv D:\env
-activar entorno: D:\env\Scripts\activate
-instalar flask y demás librerias necesarias
-
-set FLASK_APP=app.py
-set FLASK_ENV=development
-flask run

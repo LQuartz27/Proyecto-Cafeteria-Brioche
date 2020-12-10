@@ -15,7 +15,7 @@
             <div class="usuario">Usuario</div>
             <div class="brioche">Cafetería Brioche</div>
             <div>
-                <a class="boton salir" href="inicio.html">Salir</a>
+                <a class="boton salir" href="{{ url_for('show_main_menu') }}">Salir</a>
             </div>
         </div>
     </div>
@@ -107,8 +107,8 @@
             </div>
         </div>
         <div class="botones">
-            <a class="boton aceptar" href="ventas.html">Aceptar</a>
-            <a class="boton cancelar" href="inicio.html">Cancelar</a>
+            <a class="boton aceptar" href="{{ url_for('vender') }}">Aceptar</a>
+            <a class="boton cancelar" href="{{ url_for('show_main_menu') }}">Cancelar</a>
         </div>
     </div>
 </body>
