@@ -30,22 +30,27 @@
             </figure>
         </div>
         <div class="form-container">
-            <form action="" class="form">
+            <form action="" method="post" class="form" id="new-cashier-form">
+                {{ new_cashier_form.hidden_tag() }}
                 <h3>Nuevo Cajero</h3>
                 <label for="username">
                     <span>Nombre de usuario</span>
-                    <input type="text" name="username" id="username">
+                    {{ new_cashier_form.username(placeholder='Nombre de usuario', id="username") }}
+                    <!-- <input type="text" name="username" id="username"> -->
                 </label>
                 <label for="password">
                     <span>Contraseña</span>
-                    <input type="text" name="password" id="password">
+                    {{ new_cashier_form.password(placeholder='Contraseña', id="password") }}
+                    <!-- <input type="text" name="password" id="password"> -->
                 </label>
                 <label for="email">
                     <span>Correo electrónico</span>
-                    <input type="email" name="email" id="email">
+                    {{ new_cashier_form.email(placeholder='Correo electrónico', id="email") }}
+                    <!-- <input type="email" name="email" id="email"> -->
                 </label>
                 <div class="buttons-container">
-                    <button type="submit" class="button create">Crear cajero</button>
+                    {{ new_cashier_form.submit(class="button create") }}
+                    <!-- <button type="submit" class="button create">Crear cajero</button> -->
                     <button type="reset" class="button cancel">Cancelar</button>
                 </div>
             </form>

@@ -69,6 +69,7 @@ div.user-info{
     font-size: 2rem;
     padding: 1rem;
     font-family: inherit;
+    text-decoration: none;
 }
 .button.go-back{
     background-color: var(--green);

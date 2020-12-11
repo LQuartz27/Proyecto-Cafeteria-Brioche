@@ -15,7 +15,7 @@
             <a class="boton aceptar-admin" href="{{ url_for('vender') }}">Registrar Venta</a>
         </div>
         <div class="seleccion">
-            <a href="gestionarProducto.html">
+            <a href="{{ url_for('gestionar_productos') }}">
                 <img class="brioche-foto" src={{ url_for('static', filename='images/pan.png') }} alt="Pan">
             </a>
             <a class="boton aceptar-admin" href="{{ url_for('gestionar_productos') }}">Gestionar Productos</a>

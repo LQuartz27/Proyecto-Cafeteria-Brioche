@@ -60,6 +60,9 @@ div.user-info{
     padding: 1rem;
     margin: 0 6rem;
 }
+.buttons-container a{
+    text-decoration: none;
+}
 .button {
     width: 100%;
     background-color: var(--red);
@@ -69,16 +72,28 @@ div.user-info{
     font-size: 2rem;
     padding: 1rem;
     font-family: inherit;
+    text-decoration: none;
 }
 .button.go-back{
     background-color: var(--green);
     margin-bottom: 0.5rem;
 }
+
 .button.create{
     background-color: var(--dark-blue);
     margin-bottom: 0.5rem;
 }
+.button.create:hover {
+    background-color: #444754;
+}
 
+.button.cancel:hover,
+a.button.log-out:hover {
+    background-color: #e04c68;
+}
+a.button.go-back:hover{
+    background-color: #81ceae;
+}
 .main-container {
     width: 100vw;
     height: 85vh;

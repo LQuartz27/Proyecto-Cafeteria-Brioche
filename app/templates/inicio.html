@@ -7,14 +7,25 @@
     <title>Brioche ☕ - Iniciar sesión</title>
   </head>
   <body>
+    {% for message in get_flashed_messages() %}
+            {{ message }}
+    {% endfor %}
+
     <section class = "form-registro">
       <center><img src={{ url_for('static', filename='images/usuario_profile_img.png') }} style="width: 50px; height:50px"></center>
       <h4>Inicio de sesión</h4>
-      <input class="controls" type="text" name="usuario" id="nombre" placeholder="Usuario">
-      <input class="controls" type="password" name="contraseña" id="contraseña" placeholder="Contraseña">
+      <form action="" method="post" id='login-form'>
+        {{ login_form.hidden_tag() }}
+        {{ login_form.username(placeholder='Nombre de usuario', class="controls") }}
+        {{ login_form.password(placeholder='Contraseña', class="controls" ) }}
+
+        <!-- <input class="controls" type="text" name="usuario" id="nombre" placeholder="Usuario">
+        <input class="controls" type="password" name="contraseña" id="contraseña" placeholder="Contraseña"> -->
+      </form>
       <p><a href="{{ url_for('recuperar_cuenta')}}">     Recuperar contraseña</a></p>
       <br>
-      <input class="botons1" type="button" value="Acceder">
+      <!-- <input class="botons1" type="submit" value="Acceder" form='login-form'> -->
+      {{ login_form.submit(class="botons1", form='login-form' ) }}
     </section>
   </body>
 </html>
