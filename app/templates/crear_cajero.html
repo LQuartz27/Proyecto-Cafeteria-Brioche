@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +24,15 @@
             <a class="button log-out" href="{{ url_for('auth.logout') }}">Cerrar Sesion</a>
         </div>
     </header>
+-->
+{% extends "template.html" %}
+
+{% block link %}<link rel="stylesheet" href={{ url_for('static',filename='styles/estilos.css') }}> <link rel="stylesheet" href={{ url_for('static',filename='styles/crearCajero.css') }}>{% endblock %}
+
+{% block title %}Brioche ☕ - Reg. Cajero{% endblock %}
+
+{% block body %}
+
     <main class="main-container">
         <div class="panel">
             <figure>
@@ -61,5 +71,10 @@
             </figure>
         </div>
     </main>
+
+
+{% endblock %}
+<!--
 </body>
 </html>
+-->

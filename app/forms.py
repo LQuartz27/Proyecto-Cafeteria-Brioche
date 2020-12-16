@@ -34,6 +34,9 @@ class PasswordChangeForm(FlaskForm):
     new_pass = StringField('Nueva Contraseña', validators=[DataRequired()])
     confirm_pass = StringField('Confirmar Contraseña', validators=[DataRequired()])
 
+class RecForm(FlaskForm):
+    email = StringField('Correo electrónico', validators=[DataRequired(), Email()])
+    submit = SubmitField("Recuperar Contraseña")
 
 
 

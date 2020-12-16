@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
 
 from app import create_app
-from app.forms import LoginForm, NewCashierForm, ProductForm, PasswordChangeForm
+from app.forms import LoginForm, NewCashierForm, ProductForm, PasswordChangeForm, RecForm
 from app.clases.usuario import Usuario
 from app.clases.producto import Producto
 from app.clases.conexion import Conexion
@@ -68,7 +68,7 @@ def crear_cajero():
                                                                         
         return redirect( url_for('crear_cajero'))
 
-    return render_template('crear_cajero.html', **context)
+    return render_template('crear_cajero.html', isLogged=True, **context)
 
 
 @app.route('/gestionar_productos', methods=['GET','POST'])
@@ -110,7 +110,7 @@ def gestionar_productos():
 
         return redirect( url_for('gestionar_productos') )
 
-    return render_template('gestionar_productos.html',**context)
+    return render_template('gestionar_productos.html', isLogged=True, **context)
 
 
 @app.route('/cambiar_clave', methods=['GET','POST'])
@@ -121,7 +121,12 @@ def cambiar_clave():
 
 @app.route('/recuperacion_cuenta', methods=['GET','POST'])
 def recuperar_cuenta():
-    return render_template('recuperar_cuenta.html')
+    rec_form = RecForm()
+    context = {
+        'rec_form':rec_form,
+    }
+    #(...)
+    return render_template('recuperar_cuenta.html', **context)
 
 
 @app.route('/venta', methods=['GET','POST'])

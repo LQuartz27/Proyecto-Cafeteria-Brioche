@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="es">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href={{ url_for('static',filename='styles/estilo.css') }}>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href={{ url_for('static',filename='styles/estilos.css') }}>
 
     <title>Brioche ☕ - Iniciar sesión</title>
   </head>
@@ -11,7 +12,7 @@
             {{ message }}
     {% endfor %}
 
-    <section class = "form-registro">
+    <section class = "f-registro">
       <center><img src={{ url_for('static', filename='images/usuario_profile_img.png') }} style="width: 50px; height:50px"></center>
       <h4>Inicio de sesión</h4>
       <form action="" method="post" id='login-form'>

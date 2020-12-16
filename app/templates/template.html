@@ -11,12 +11,17 @@
     <div class="principal">
         <div class="principal-items">
             <div class="usuario-foto" >
-                <img src={{ url_for('static', filename='images/usuario_profile_img.png') }} alt="Usuario_img">
+                <img class="imgs" src={{ url_for('static', filename='images/usuario_profile_img.png') }} alt="Usuario_img">
             </div>
             <div class="usuario">{{ current_user.id }}</div>
             <div class="brioche">Cafetería Brioche</div>
             <div>
-                <a class="boton salir" href="{{ url_for('auth.logout') }}">Salir</a>
+                {% if isLogged %}
+                    <a class="hboton tback" href="{{ url_for('show_admin_menu') }}">Regresar</a> 
+                    <a class="hboton tsalir" href="{{ url_for('auth.logout') }}">Cerrar sesión</a> 
+                {% else %}
+                    <a class="boton salir" href="{{ url_for('auth.logout') }}">Salir</a>
+                {% endif %}
             </div>
         </div>
     </div>
