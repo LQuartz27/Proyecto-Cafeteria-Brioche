@@ -10,6 +10,10 @@ class Usuario(UserMixin):
         self.clave = password
         self.correo = ""
         self.tipo = ""
+        con = Conexion()
+        self.con = con
+        db = Database(con)
+        self.db = db
 
 
     @staticmethod
@@ -38,7 +42,7 @@ class Usuario(UserMixin):
         con = Conexion()
         db = Database(con)
 
-        db.agregar_usuario_db(self)
+        return db.agregar_usuario_db(self)
 
 
     def agregar_cajero(self, cajero):
@@ -56,7 +60,9 @@ class Usuario(UserMixin):
     def agregar_producto(self, producto):
         """Llama a la clase Database para la creación de productos."""
         if self.tipo == 'administrador':
-            self.db.agregar_producto_db(producto)
+            # Si el producto fue agregado con exito, retorna True, de lo contrario False
+            return self.db.agregar_producto_db(producto)
+            
 
 
     def actualizar_producto(self, producto):

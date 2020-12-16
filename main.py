@@ -6,6 +6,9 @@ from werkzeug.utils import secure_filename
 from app import create_app
 from app.forms import LoginForm, NewCashierForm, ProductForm, PasswordChangeForm
 from app.clases.usuario import Usuario
+from app.clases.producto import Producto
+from app.clases.conexion import Conexion
+from app.clases.database import Database
 
 from flask_login import login_required, current_user
 import os
@@ -47,7 +50,7 @@ def crear_cajero():
         username = new_cashier_form.username.data
         password = new_cashier_form.password.data 
         email = new_cashier_form.email.data
-        tipo = 'administrador'
+        tipo = 'cajero'
 
         print('\nSe creó el cajero: {}\nPass: {}\nEmail: {}\n'.format(username,
                                                                 password, email))
@@ -58,8 +61,10 @@ def crear_cajero():
         nuevo_cajero.set_correo(email)
         nuevo_cajero.set_tipo(tipo)
 
-        flash('Se creó un nuevo cajero!')
-        nuevo_cajero.crear_en_BBDD()
+        if nuevo_cajero.crear_en_BBDD():
+            flash('Se creó un nuevo cajero!')
+        else:
+            flash('Error, usuario o correo ya existe en la base de datos.')
                                                                         
         return redirect( url_for('crear_cajero'))
 
@@ -79,22 +84,32 @@ def gestionar_productos():
     }
 
     if product_form.validate_on_submit():
+        # Tomando datos del formulario
         ref_number = product_form.ref_number.data
         product_name = product_form.product_name.data
         price = product_form.price.data
         qty = product_form.qty.data
         photo = product_form.photo.data
 
+        # Nombrando la imagen que se guardará en el servidor (el path donde sera guardada)
         filename = photo.filename
-        save_filename = secure_filename(ref_number +'.'+ filename.rsplit('.',1)[1].lower())
-        photo.save(os.path.join(images_path, save_filename))
+        save_filename = secure_filename(product_name+'_'+ref_number +'.'+ filename.rsplit('.',1)[1].lower())
+        file_path = os.path.join(images_path, save_filename)
 
-        print('Producto creado:')
-        print('Ref: {}\nName: {}\nPrice: {}\nQty: {}\nPath: {}\n'.format(ref_number,
-                                                             product_name, price, qty, save_filename))
+        # Creamos el objeto producto, si no existe se agrega a la BBDD, de lo contrario no y se avisa al user
+        nuevo_producto = Producto(ref_number, product_name, price, qty, file_path)
+        if current_user.agregar_producto(nuevo_producto):
+
+            print('Producto creado:')
+            print('Ref: {}\nName: {}\nPrice: {}\nQty: {}\nPath: {}\n'.format(ref_number,
+                                                                product_name, price, qty, save_filename))
+            photo.save(file_path)
+            flash('Producto agregado con éxtio!')
+        else:
+            flash('Error, referencia o nombre ya existe en la base de datos.')
 
         return redirect( url_for('gestionar_productos') )
-    
+
     return render_template('gestionar_productos.html',**context)
 
 

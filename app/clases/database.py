@@ -63,12 +63,13 @@ class Database:
         for product in lista_productos:
             if producto.ref in product or producto.nombre in product:
                 print("Error, referencia o nombre ya existe en la base de datos.")
-                return None
+                return False
 
         cur.execute(query, (producto.ref, producto.nombre, producto.precio, producto.unidades, producto.foto))
         self.conexion.conn.commit()
 
         self.conexion.cerrar()
+        return True
 
     def registrar_venta_db(self, venta):
         """Agrega una nueva venta a la base de datos."""
@@ -147,11 +148,12 @@ class Database:
         for usuario in lista_usuarios:
             if new_user.id in usuario or new_user.correo in usuario:
                 print("Error, usuario o correo ya existe en la base de datos.")
-                return None
+                return False
 
         cur.execute(query, (new_user.id, new_user.clave, new_user.correo, new_user.tipo))
         self.conexion.conn.commit()
         self.conexion.cerrar()
+        return True
 
     def eliminar_usuario(self, username):
         """ Elimina un usuario de la BBDD """
