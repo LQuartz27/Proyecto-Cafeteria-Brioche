@@ -79,6 +79,17 @@ div.user-info{
     background-color: var(--dark-blue);
     margin-bottom: 0.5rem;
 }
+.button.button.non-critical:hover {
+    background-color: #444754;
+}
+
+.button:hover,
+a.button.log-out:hover {
+    background-color: #e04c68;
+}
+a.button.go-back:hover{
+    background-color: #81ceae;
+}
 
 .main-container {
     width: 100vw;
@@ -108,9 +119,9 @@ div.user-info{
 }
 
 .sidebar img{
-    width: 33%;
+    width: 19.5%;
     position: relative;
-    left: 35%;
+    left: 42.5%;
 }
 
 .sidebar .button{

@@ -1,6 +1,9 @@
 #Creando nuestros formularios primer formulario
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FileField, PasswordField
+from wtforms import StringField, PasswordField, SubmitField, FileField, PasswordField, FileField
+# Images upload config
+from flask_uploads import IMAGES
+from flask_wtf.file import FileRequired, FileAllowed
 # from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Email
 
@@ -18,10 +21,12 @@ class NewCashierForm(FlaskForm):
 
 
 class ProductForm(FlaskForm):
+
     ref_number = StringField('Número de referencia', validators=[DataRequired()])
     product_name = StringField('Nombre del producto', validators=[DataRequired()])
     price = StringField('Precio', validators=[DataRequired()])
-    # photo ---> To resolve
+    qty = StringField('Precio', validators=[DataRequired()])
+    photo = FileField('Foto', validators=[FileRequired(), FileAllowed(IMAGES, 'Images only!')])
 
 
 class PasswordChangeForm(FlaskForm):

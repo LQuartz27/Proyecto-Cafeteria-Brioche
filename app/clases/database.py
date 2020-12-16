@@ -102,3 +102,65 @@ class Database:
         cur.execute(query, producto.ref)
         self.conexion.conn.commit()
         self.conexion.cerrar()
+
+    def buscar_usuario(self, username):
+        """ Busca un usuario en la tabla de  """
+        self.conexion.iniciar()
+        cur = self.conexion.conn.cursor()
+        print('\nusername pasado a database.buscar_usuario(): {}\n'.format(username))
+
+        query = "SELECT * FROM Usuarios WHERE usuario=?"
+        cur.execute(query, (username,))
+        
+        db_user = cur.fetchall()
+        self.conexion.cerrar()
+
+        if len(db_user) == 0:
+            return None
+
+        print('Usuario info encontrado: {}'.format(str(db_user)))
+
+        return db_user[0]
+
+    def listar_usuarios(self):
+        """Devuelve una lista de tuplas con la información de cada usuario en la BBDD."""
+        self.conexion.iniciar()
+        cur = self.conexion.conn.cursor()
+
+        query = "SELECT * FROM Usuarios"
+
+        cur.execute(query)
+        lista_usuarios = cur.fetchall()
+        self.conexion.cerrar()
+
+        return lista_usuarios
+
+    def agregar_usuario_db(self, new_user):
+        """Agrega un nuevo cajero a la base de datos validando que no esté ya creado."""
+        lista_usuarios = self.listar_usuarios()
+
+        self.conexion.iniciar()
+        cur = self.conexion.conn.cursor()
+
+        query = "INSERT INTO Usuarios VALUES (?, ?, ?, ?)"
+
+        for usuario in lista_usuarios:
+            if new_user.id in usuario or new_user.correo in usuario:
+                print("Error, usuario o correo ya existe en la base de datos.")
+                return None
+
+        cur.execute(query, (new_user.id, new_user.clave, new_user.correo, new_user.tipo))
+        self.conexion.conn.commit()
+        self.conexion.cerrar()
+
+    def eliminar_usuario(self, username):
+        """ Elimina un usuario de la BBDD """
+
+        self.conexion.iniciar()
+        cur = self.conexion.conn.cursor()
+
+        query = 'DELETE FROM Usuarios WHERE usuario=?'
+        cur.execute(query, (username,))
+
+        self.conexion.conn.commit()
+        self.conexion.cerrar()

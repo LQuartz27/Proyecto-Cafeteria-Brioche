@@ -10,7 +10,7 @@
                 <img class="brioche-foto-admin" src={{ url_for('static', filename='images/logo_brioche.png') }} alt="Logo Brioche">
             </div>
             <div class="seleccion">
-                 <a href="ventas.html">
+                 <a href={{ url_for('vender') }}>
                     <img class="brioche-foto" src={{ url_for('static', filename='images/factura.png') }} alt="Facturas">
                  </a>
                 <a class="boton aceptar-admin" href="{{ url_for('vender') }}">Registrar Venta</a>
