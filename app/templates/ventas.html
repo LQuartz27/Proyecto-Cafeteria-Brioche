@@ -61,7 +61,7 @@
         <td colspan="3" valign="bottom"><em>Nombre Cliente</em></td>
         <td width="8%">&nbsp;</td>
         <td width="15%" align="right"><em>Usuario</em></td>
-        <td><input class="tbprot" type="text" id="ref8"></td>
+        <td><input class="tbprot" type="text" id="ref8" placeholder={{ current_user.id }}></td>
       </tr>
       <tr>
         <td colspan="3"><input class="tbcant" type="text" id="ref9"></td>
@@ -190,7 +190,13 @@
     <td><input type="submit" class="registrar" value="Registrar"></td>
   </tr>
   <tr>
-    <td "><input type="submit" class="salir1" value="Cancelar"></td>
+    {# <td ><input type="submit" class="salir1" value="Cancelar"></td> #}
+    {% if current_user.tipo == 'cajero' %}
+      <td ><a class="salir1" href="{{ url_for('show_cajero_menu') }}">Cancelar</a></td>
+    {% elif current_user.tipo == 'administrador' %}
+      <td ><a class="salir1" href="{{ url_for('show_admin_menu') }}">Cancelar</a></td>
+    {% endif %}
+    {#<td "><a class="salir1" href="{{ url_for('vender') }}">Cancelar</a></td>#}
   </tr>
 </table>
 <br><br>

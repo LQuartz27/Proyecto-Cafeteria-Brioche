@@ -14,13 +14,13 @@
                 <figure class="user-info-item">
                     <img src={{ url_for('static', filename='images/usuario_profile_img.png') }} alt="Foto de perfil">
                 </figure>
-                <h3 class="username user-info-item">Usuario</h3>
+                <h3 class="username user-info-item">{{ current_user.id }}</h3>
             </a>
         </div>
         <h1 class="window-title">Cafetería Brioche</h1>
         <div class="buttons-container">
             <a class="button go-back" href="{{ url_for('show_admin_menu') }}">Regresar</a>
-            <a class="button log-out" href="{{ url_for('show_main_menu') }}">Cerrar Sesion</a>
+            <a class="button log-out" href="{{ url_for('auth.logout') }}">Cerrar Sesion</a>
         </div>
     </header>
     <main class="main-container">

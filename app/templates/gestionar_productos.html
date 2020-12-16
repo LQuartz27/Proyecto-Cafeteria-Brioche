@@ -13,38 +13,47 @@
                 <figure class="user-info-item">
                     <img src={{ url_for('static', filename='images/usuario_profile_img.png') }} alt="Foto de perfil">
                 </figure>
-                <h3 class="username user-info-item">Usuario</h3>
+                <h3 class="username user-info-item">{{ current_user.id }}</h3>
             </a>
         </div>
         <h1 class="window-title">Cafetería Brioche</h1>
         <div class="buttons-container">
             <a class="button go-back" href="{{ url_for('show_admin_menu') }}">Regresar</a>
-            <a class="button log-out" href="{{ url_for('show_main_menu') }}">Cerrar Sesion</a>
+            <a class="button log-out" href="{{ url_for('auth.logout') }}">Cerrar Sesion</a>
         </div>
     </header>
     <main class="main-container">
         <aside class="sidebar">
-            <form action="" class="form">
+            <form action="" class="form" enctype="multipart/form-data" method='post'>
+                {{ product_form.hidden_tag() }}
                 <h3>Gestionar Productos</h3>
                 <label for="referencia">
                     <span>Número de referencia</span>
-                    <input type="text" name="referencia" id="referencia">
+                    {{ product_form.ref_number() }}
+                    <!-- <input type="text" name="referencia" id="referencia"> -->
                 </label>
                 <label for="producto">
                     <span>Nombre del producto</span>
-                    <input type="text" name="producto" id="producto">
+                    {{ product_form.product_name() }}
+                    <!-- <input type="text" name="producto" id="producto"> -->
                 </label>
                 <label for="precio">
                     <span>Precio</span>
-                    <input type="text" name="precio" id="precio">
+                    {{ product_form.price() }}
+                    <!-- <input type="text" name="precio" id="precio"> -->
+                </label>
+                <label for="cantidad">
+                    <span>Cantidad</span>
+                    {{ product_form.qty() }}
+                    <!-- <input type="text" name="cantidad" id="cantidad"> -->
                 </label>
                 <label for="foto" class="flex-label">
                     <span class="foto-span">Foto del producto</span>
                     <label for="file-upload" class="custom-file-upload button non-critical">
                         Examinar
                     </label>
-                    <input id="file-upload" type="file"/>
-                    <!-- <button class="button non-critical">Examinar</button> -->
+                    {{ product_form.photo(id="file-upload") }}
+                    <!-- <input id="file-upload" type="file"/> -->
                 </label>
 
                 <button type="submit" class="button">Crear producto</button>
