@@ -98,7 +98,7 @@ class Database:
         self.conexion.iniciar()
         cur = self.conexion.conn.cursor()
 
-        query = "DELETE FROM Productos WHERE ref=?"
+        query = "DELETE FROM Productos WHERE referencia=?"
 
         cur.execute(query, producto.ref)
         self.conexion.conn.commit()
