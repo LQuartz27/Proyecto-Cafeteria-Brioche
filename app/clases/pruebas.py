@@ -32,9 +32,9 @@ compra2 = [[1, 2, "late", 2_500], [3, 10, "brownie", 5_000]]
 compra3 = [[5, 2, "late", 2_500], [3, 1, "dona", 5_000]]
 
 # Creación de ventas.
-venta1 = Venta("admin", "10/12/2020", str(compra1), "cliente1", 2_375, 12_500)
-venta2 = Venta("admin", "10/12/2020", str(compra2), "cliente2", 3_325, 17_500)
-venta3 = Venta("admin", "10/12/2020s", str(compra3), "cliente3", 5_225, 27_500)
+venta1 = Venta("admin", "10/12/2020", str(compra1), "cliente1", 12_500)
+venta2 = Venta("admin", "10/12/2020", str(compra2), "cliente2", 17_500)
+venta3 = Venta("admin", "10/12/2020s", str(compra3), "cliente3",  27_500)
 
 # Registro de ventas creadas en la base de datos.
 admin.registrar_venta(venta1)

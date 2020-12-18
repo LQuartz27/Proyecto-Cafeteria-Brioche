@@ -76,9 +76,9 @@ class Database:
         self.conexion.iniciar()
         cur = self.conexion.conn.cursor()
 
-        query = "INSERT INTO Ventas (usuario, fecha, compra, cliente, IVA, total) VALUES (?, ?, ?, ?, ?, ?)"
+        query = "INSERT INTO Ventas (usuario, fecha, compra, cliente, total) VALUES (?, ?, ?, ?, ?)"
 
-        cur.execute(query, (venta.usuario, venta.fecha, venta.compra, venta.cliente, venta.IVA, venta.total))
+        cur.execute(query, (venta.usuario, venta.fecha, venta.compra, venta.cliente, venta.total))
         self.conexion.conn.commit()
         self.conexion.cerrar()
 
