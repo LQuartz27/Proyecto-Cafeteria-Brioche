@@ -66,6 +66,9 @@
                 <label for="password">
                     <span>Contraseña</span>
                     {{ new_cashier_form.password(placeholder='Contraseña', id="password") }}
+                    {% for error in new_cashier_form.password.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
                     <!-- <input type="text" name="password" id="password"> -->
                 </label>
                 <label for="email">

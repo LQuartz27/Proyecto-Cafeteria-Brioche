@@ -1,6 +1,6 @@
 from flask import Flask, request, make_response, redirect, render_template, session, url_for, flash
 from flask_login import login_required, current_user
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 
 from app import create_app
@@ -200,7 +200,38 @@ def gestionar_productos():
 @app.route('/cambiar_clave', methods=['GET','POST'])
 @login_required
 def cambiar_clave():
-    return render_template('cambiar_password.html')
+
+    pass_change_form = PasswordChangeForm()
+    context = {
+        'pass_change_form':pass_change_form,
+    }
+    print('Validate on submit: {}'.format(pass_change_form.validate_on_submit()))
+    if pass_change_form.validate_on_submit():
+        prev_pass = pass_change_form.prev_pass.data
+        new_pass = pass_change_form.new_pass.data
+        confirm_pass = pass_change_form.confirmPass.data
+        print('Ingresados al formulario')
+        print(prev_pass)
+        print(new_pass)
+        print(confirm_pass)
+
+        # Si la contraseña previa es válida, procedemos a hacer el cambio en BBDD
+        if check_password_hash(current_user.clave, prev_pass):
+            # En BBDD guardamos únicamente la versión hasheada de la contraseña
+            password_hash = generate_password_hash(new_pass)
+            print('New hashpass', password_hash)
+            # Si se logra hacer la actualización con éxito en la BBDD se le avisa al usuario
+            if current_user.actualizar_pass_BBDD(password_hash):
+                flash('Contraseña actualizada con éxito','success')
+            # Si no se logra actualizar en BBDD también se avisa al usuario
+            else:
+                flash('Error al actualizar la contraseña en la base de datos')
+            
+            return redirect( url_for('cambiar_clave'))
+        else:
+            flash('Contraseña actual inválida','danger')
+    
+    return render_template('cambiar_password.html', **context)
 
 
 @app.route('/recuperacion_cuenta', methods=['GET','POST'])

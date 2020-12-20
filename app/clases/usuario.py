@@ -39,11 +39,26 @@ class Usuario(UserMixin):
 
     def crear_en_BBDD(self):
         """ Crea el actual usuario en la BBDD"""
-        con = Conexion()
-        db = Database(con)
+        # con = Conexion()
+        # db = Database(con)
+        return self.db.agregar_usuario_db(self)
 
-        return db.agregar_usuario_db(self)
+    def actualizar_pass_BBDD(self, new_pass):
+        """ Actualiza la contraseña """
+        try:
+            self.db.conexion.iniciar()
+            cur = self.db.conexion.conn.cursor()
 
+            query = "UPDATE Usuarios SET clave=? WHERE usuario=?"
+            cur.execute(query, (new_pass, self.id))
+
+            self.db.conexion.conn.commit()
+            self.db.conexion.cerrar()
+            return True
+            
+        except Exception as e:
+            print(e)
+            return False
 
     def agregar_cajero(self, cajero):
         """Llama a la clase Database para la creación de cajeros."""

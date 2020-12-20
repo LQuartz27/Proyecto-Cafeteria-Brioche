@@ -5,7 +5,7 @@ from wtforms import StringField, PasswordField, SubmitField, FileField, Password
 from flask_uploads import IMAGES
 from flask_wtf.file import FileRequired, FileAllowed
 # from wtforms.fields.html5 import EmailField
-from wtforms.validators import DataRequired, Email, StopValidation
+from wtforms.validators import DataRequired, Email, StopValidation, Length
 
 
 class CustomCheck(object):
@@ -61,7 +61,7 @@ class LoginForm(FlaskForm):
 
 class NewCashierForm(FlaskForm):
     username = StringField('Nombre de usuario', validators=[DataRequired()])
-    password = PasswordField('Contraseña', validators=[DataRequired()])
+    password = PasswordField('Contraseña', validators=[DataRequired(), Length(min=8, message="Debe contener al menos 8 caracteres")])
     email = StringField('Correo electrónico', validators=[DataRequired(), Email()])
     submit = SubmitField("Crear cajero")
 
@@ -80,9 +80,15 @@ class ProductForm(FlaskForm):
 
 
 class PasswordChangeForm(FlaskForm):
-    prev_pass = StringField('Contraseña anterior', validators=[DataRequired()])
-    new_pass = StringField('Nueva Contraseña', validators=[DataRequired()])
-    confirm_pass = StringField('Confirmar Contraseña', validators=[DataRequired()])
+    prev_pass = PasswordField('Contraseña anterior', validators=[DataRequired()])
+    new_pass = PasswordField('Nueva Contraseña', validators=[DataRequired(), Length(min=8, message="Debe contener al menos 8 caracteres")])
+    confirmPass = PasswordField('Confirmar Contraseña', validators=[DataRequired()])
+    submit = SubmitField('Cambiar contraseña')
+    def validate_confirmPass(form, field):
+        if field.name == 'confirmPass':
+            print('\nValidando confirmPass. Form Data: {}\n'.format(form.data))
+            if form.data['new_pass'] != field.data:
+                raise StopValidation('Error al confirmar nueva contraseña')
 
 class RecForm(FlaskForm):
     email = StringField('Correo electrónico', validators=[DataRequired(), Email()])
