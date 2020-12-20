@@ -61,11 +61,11 @@ class Database:
         query = "INSERT INTO Productos VALUES (?, ?, ?, ?, ?)"
 
         for product in lista_productos:
-            if producto.ref in product or producto.nombre in product:
+            if producto.referencia in product or producto.nombre in product:
                 print("Error, referencia o nombre ya existe en la base de datos.")
                 return False
 
-        cur.execute(query, (producto.ref, producto.nombre, producto.precio, producto.unidades, producto.foto))
+        cur.execute(query, (producto.referencia, producto.nombre, producto.precio, producto.unidades, producto.foto))
         self.conexion.conn.commit()
 
         self.conexion.cerrar()
@@ -84,31 +84,101 @@ class Database:
 
     def actualizar_producto_db(self, producto):
         """Actualiza la información de un producto en la base de datos."""
+
+        lista_productos = self.lista_productos()
+        # Verificamos que el producto sí exista en la BBDD
+        product_exists = False
+        for product in lista_productos:
+            if producto.referencia in product:
+                product_exists = True
+                break
+        # Si el producto no existe será imposible actualizarlo
+        if not product_exists:
+            return False
+
         self.conexion.iniciar()
         cur = self.conexion.conn.cursor()
 
-        query = "UPDATE Productos SET nombre=?, precio=?, unidades=?, foto=? WHERE referencia=?"
+        full_change = True
+        query = "UPDATE Productos SET "
+        new_values = []
+        for attribute, value in producto.__dict__.items():
+            if attribute == 'referencia':
+                continue
 
-        cur.execute(query, (producto.nombre, producto.precio, producto.unidades, producto.foto, producto.ref))
+            if not value:
+                full_change = False
+            else:    
+                query += '{}=?, '.format(attribute)
+                new_values.append(value)
+
+        query = query[:-2] + 'WHERE referencia=?'
+        new_values.append(producto.referencia)
+        query_tuple = tuple(new_values)
+
+        if full_change:
+            query = "UPDATE Productos SET nombre=?, precio=?, unidades=?, foto=? WHERE referencia=?"
+            cur.execute(query, (producto.nombre, producto.precio, producto.unidades, producto.foto, producto.referencia))
+        
+        else:
+            cur.execute(query, query_tuple)
+        
         self.conexion.conn.commit()
         self.conexion.cerrar()
 
+        return True
+
+
     def eliminar_producto_db(self, producto):
         """Elimina un producto de la base de datos."""
+
+        lista_productos = self.lista_productos()
+        # print('IMPRIMIENDO LA LISTA DE PRODUCTOS')
+        # Verificamos que el producto sí exista en la BBDD
+        product_exists = False
+        for product in lista_productos:
+            # print(product)
+            if producto.referencia in product:
+                product_exists = True
+                break
+        # Si el producto no existe será imposible eliminarlo
+        if not product_exists:
+            return False
+
         self.conexion.iniciar()
         cur = self.conexion.conn.cursor()
 
         query = "DELETE FROM Productos WHERE referencia=?"
 
-        cur.execute(query, producto.ref)
+        cur.execute(query, (producto.referencia,))
         self.conexion.conn.commit()
         self.conexion.cerrar()
+
+        return True
+
+    def buscar_producto(self, referencia):
+        """ Busca un producto en la tabla de productos"""
+        self.conexion.iniciar()
+        cur = self.conexion.conn.cursor()
+
+        query = "SELECT * FROM Productos WHERE referencia=?"
+        cur.execute(query, (referencia,))
+        
+        db_product = cur.fetchall()
+        self.conexion.cerrar()
+
+        if len(db_product) == 0:
+            return None
+
+        # print('Usuario info encontrado: {}'.format(str(db_user)))
+
+        return db_product[0]
 
     def buscar_usuario(self, username):
         """ Busca un usuario en la tabla de  """
         self.conexion.iniciar()
         cur = self.conexion.conn.cursor()
-        print('\nusername pasado a database.buscar_usuario(): {}\n'.format(username))
+        # print('\nusername pasado a database.buscar_usuario(): {}\n'.format(username))
 
         query = "SELECT * FROM Usuarios WHERE usuario=?"
         cur.execute(query, (username,))
@@ -119,7 +189,7 @@ class Database:
         if len(db_user) == 0:
             return None
 
-        print('Usuario info encontrado: {}'.format(str(db_user)))
+        # print('Usuario info encontrado: {}'.format(str(db_user)))
 
         return db_user[0]
 

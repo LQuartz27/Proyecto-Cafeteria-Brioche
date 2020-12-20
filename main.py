@@ -62,9 +62,9 @@ def crear_cajero():
         nuevo_cajero.set_tipo(tipo)
 
         if nuevo_cajero.crear_en_BBDD():
-            flash('Se creó un nuevo cajero!')
+            flash('Se creó un nuevo cajero!','success')
         else:
-            flash('Error, usuario o correo ya existe en la base de datos.')
+            flash('Error, usuario o correo ya existe en la base de datos.','danger')
                                                                         
         return redirect( url_for('crear_cajero'))
 
@@ -91,24 +91,108 @@ def gestionar_productos():
         qty = product_form.qty.data
         photo = product_form.photo.data
 
-        # Nombrando la imagen que se guardará en el servidor (el path donde sera guardada)
+        print('\nRequest form dentro del main:\n{}'.format(request.form))
         filename = photo.filename
-        save_filename = secure_filename(product_name+'_'+ref_number +'.'+ filename.rsplit('.',1)[1].lower())
-        file_path = os.path.join(images_path, save_filename)
 
-        # Creamos el objeto producto, si no existe se agrega a la BBDD, de lo contrario no y se avisa al user
-        nuevo_producto = Producto(ref_number, product_name, price, qty, file_path)
-        if current_user.agregar_producto(nuevo_producto):
+        if 'create_button' in request.form:
+            # flash('PRESIONE EL BOTON CREAR', 'info')
+            # Nombrando la imagen que se guardará en el servidor (el path donde sera guardada)
+            if filename:
+                save_filename = secure_filename(product_name+'_'+ref_number +'.'+ filename.rsplit('.',1)[1].lower())
+            else:
+                save_filename = 'coffee-shop.png'
 
-            print('Producto creado:')
-            print('Ref: {}\nName: {}\nPrice: {}\nQty: {}\nPath: {}\n'.format(ref_number,
-                                                                product_name, price, qty, save_filename))
-            photo.save(file_path)
-            flash('Producto agregado con éxtio!')
-        else:
-            flash('Error, referencia o nombre ya existe en la base de datos.')
+            file_path = os.path.join(images_path, save_filename)
 
-        return redirect( url_for('gestionar_productos') )
+            # Creamos el objeto producto, si no existe se agrega a la BBDD, de lo contrario no y se avisa al user
+            nuevo_producto = Producto(ref_number, product_name, price, qty, save_filename)
+            if current_user.agregar_producto(nuevo_producto):
+
+                print('\nProducto creado:')
+                # print('Ref: {}\nName: {}\nPrice: {}\nQty: {}\nPath: {}\n'.format(ref_number,
+                #                                                     product_name, price, qty, save_filename))
+                if save_filename == 'coffee-shop.png':
+                    pass
+                else:
+                    photo.save(file_path)
+
+                flash('Producto agregado con éxtio!','success')
+            else:
+                flash('Error, referencia o nombre ya existe en la base de datos.','danger')
+
+            return redirect( url_for('gestionar_productos') )
+        
+        elif 'update_button' in request.form:
+            # flash('PRESIONE EL BOTON ACTUALIZAR', 'info')
+            # Instanciamos un objeto con la informacion del formulario
+            if filename:
+                # Si se va a actualizar la imagen, debemos buscar la referencia a la imagen anterior
+                ddbb_info = current_user.buscar_producto(ref_number)
+                prior_filename = ddbb_info['foto']
+                delete_path = os.path.join(images_path, prior_filename)
+                # Si la imagen relacionada es la estandar para archivos sin imagen, no hay que eliminar nada
+                if prior_filename == 'coffee-shop.png':
+                    pass
+                # Si tiene una referencia distinta a la imagen default, la eliminamos
+                elif os.path.exists(delete_path):
+                    os.remove(delete_path)
+                else:
+                    print('No se eliminó el archivo')
+                    flash('No se eliminó el archivo anterior','info')
+                #En caso de que al actualizar el usuario no haya pasado un nuevo product name al formulario
+                # le asignamos el nombre que ya traía, para guardar la imagen
+                if not product_name:
+                    product_name = ddbb_info['nombre']
+                save_filename = secure_filename(product_name+'_'+ref_number +'.'+ filename.rsplit('.',1)[1].lower())
+                file_path = os.path.join(images_path, save_filename)
+            else:
+                save_filename = filename
+
+            producto_a_actualizar = Producto(int(ref_number), product_name, price, qty, save_filename)
+
+            if current_user.actualizar_producto(producto_a_actualizar):
+                if save_filename == '':
+                    pass
+                else:
+                    photo.save(file_path)
+                flash('Producto actualizado con éxtio!','success')
+            else:
+                flash('Error, no existe un producto con esa referencia en la base de datos.','danger')
+
+            return redirect( url_for('gestionar_productos') )
+
+        elif 'delete_button' in request.form:
+            # flash('PRESIONE EL BOTON ELIMINAR', 'info')
+            producto_a_eliminar = Producto(int(ref_number), product_name, price, qty, filename)
+            # print('\nProducto a eliminar\n{}\n'.format(producto_a_eliminar.__dict__))
+            ddbb_info = current_user.buscar_producto(ref_number)
+            # print(ddbb_info)
+
+            if current_user.eliminar_producto(producto_a_eliminar):
+                # Accedemos a la info de la BBDD perteneciente a ese producto, necesitamos el nombre de la imagen
+                #del producto, para poder eliminarla
+                save_filename = ddbb_info['foto']
+                file_path = os.path.join(images_path, save_filename)
+
+                if save_filename == 'coffee-shop.png':
+                    pass
+                elif os.path.exists(file_path):
+                    os.remove(file_path)
+                    print('\nEl producto fue eliminado de la base de datos y el archivo de la carpeta\n')
+                else:
+                    print("The file does not exist")
+                    flash("The file does not exist",'danger')
+
+                flash('Producto eliminado con éxito!','success')
+            else:
+                flash('No existe un producto con esa referencia','warning')
+
+            # print('\nAl presionar el boton Eliminar vemos')
+            # print('Info de la imagen cargada - product_form.photo.data = {}'.format(photo))
+            # print('Uploaded filename ', photo.filename)
+            # print(photo.filename == '')
+            # print(help(photo))
+            return redirect( url_for('gestionar_productos') )
 
     return render_template('gestionar_productos.html', isLogged=True, **context)
 

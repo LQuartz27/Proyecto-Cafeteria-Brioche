@@ -2,18 +2,27 @@
 <html lang="es">
 
 <head>
-   <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
-    {% block link %}<link rel="stylesheet" href={{ url_for('static',filename='styles/estilos.css') }}>{% endblock %}
+    {% block link %}
+        <link rel="stylesheet" href={{ url_for('static',filename='styles/estilos.css') }}>
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+        <link rel="stylesheet" href={{ url_for('static',filename='styles/alerts.css') }}>
+    {% endblock %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
     <div class="principal">
         <div class="principal-items">
-            <div class="usuario-foto" >
-                <img class="imgs" src={{ url_for('static', filename='images/usuario_profile_img.png') }} alt="Usuario_img">
+            <div class="user-info">
+                <div class="usuario-foto" >
+                    <img class="imgs" src={{ url_for('static', filename='images/usuario_profile_img.png') }} alt="Usuario_img">
+                </div>
+                <div class="usuario">{{ current_user.id }}</div>
             </div>
-            <div class="usuario">{{ current_user.id }}</div>
             <div class="brioche">Cafetería Brioche</div>
             <div>
                 {% if isLogged %}
@@ -25,6 +34,16 @@
             </div>
         </div>
     </div>
+    <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{category}} alert-dismissible">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              {{message}}
+            </div>
+          {% endfor %}
+        {% endif %}
+    {% endwith %} -->
 
     {% block body %} {% endblock %}
 

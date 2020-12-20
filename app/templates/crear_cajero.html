@@ -27,11 +27,26 @@
 -->
 {% extends "template.html" %}
 
-{% block link %}<link rel="stylesheet" href={{ url_for('static',filename='styles/estilos.css') }}> <link rel="stylesheet" href={{ url_for('static',filename='styles/crearCajero.css') }}>{% endblock %}
+{% block link %}
+    <link rel="stylesheet" href={{ url_for('static',filename='styles/estilos.css') }}>
+    <link rel="stylesheet" href={{ url_for('static',filename='styles/crearCajero.css') }}>
+    <link rel="stylesheet" href={{ url_for('static',filename='styles/alerts.css') }}>
+{% endblock %}
 
 {% block title %}Brioche ☕ - Reg. Cajero{% endblock %}
 
 {% block body %}
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{category}} alert-dismissible">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              {{message}}
+            </div>
+          {% endfor %}
+        {% endif %}
+    {% endwith %}
 
     <main class="main-container">
         <div class="panel">

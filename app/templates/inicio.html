@@ -4,13 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href={{ url_for('static',filename='styles/estilos.css') }}>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <title>Brioche ☕ - Iniciar sesión</title>
   </head>
   <body>
-    {% for message in get_flashed_messages() %}
-            {{ message }}
-    {% endfor %}
+  
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{category}} alert-dismissible">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              {{message}}
+            </div>
+          {% endfor %}
+        {% endif %}
+    {% endwith %}
 
     <section class = "f-registro">
       <center><img src={{ url_for('static', filename='images/usuario_profile_img.png') }} style="width: 50px; height:50px"></center>
@@ -18,7 +29,13 @@
       <form action="" method="post" id='login-form'>
         {{ login_form.hidden_tag() }}
         {{ login_form.username(placeholder='Nombre de usuario', class="controls") }}
+        {% for error in login_form.username.errors %}
+          <span style="color: red;">{{ error }}</span>
+      {% endfor %}
         {{ login_form.password(placeholder='Contraseña', class="controls" ) }}
+        {% for error in login_form.password.errors %}
+            <span style="color: red;">{{ error }}</span>
+        {% endfor %}
 
         <!-- <input class="controls" type="text" name="usuario" id="nombre" placeholder="Usuario">
         <input class="controls" type="password" name="contraseña" id="contraseña" placeholder="Contraseña"> -->

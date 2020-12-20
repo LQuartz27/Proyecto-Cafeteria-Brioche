@@ -27,13 +27,28 @@
 
 {% extends "template.html" %}
 
-{% block link %}<link rel="stylesheet" href={{ url_for('static',filename='styles/estilos.css') }}> <link rel="stylesheet" href={{ url_for('static',filename='styles/gestionarProducto.css') }}>{% endblock %}
+{% block link %}
+    <link rel="stylesheet" href={{ url_for('static',filename='styles/gestionarProducto.css') }}>
+    <link rel="stylesheet" href={{ url_for('static',filename='styles/estilos.css') }}>
+    <link rel="stylesheet" href={{ url_for('static',filename='styles/alerts.css') }}>
+{% endblock %}
+
 
 {% block title %}Brioche ☕ - Productos{% endblock %}
 
 {% block body %}
-
-
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{category}} alert-dismissible" style="font-size:14px">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              {{message}}
+            </div>
+          {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
     <main class="main-container">
         <aside class="sidebar">
             <form action="" class="form" enctype="multipart/form-data" method='post'>
@@ -41,22 +56,34 @@
                 <h3>Gestionar Productos</h3>
                 <label for="referencia">
                     <span>Número de referencia</span>
-                    {{ product_form.ref_number() }}
+                    {{ product_form.ref_number(id="referencia") }}
+                    {% for error in product_form.ref_number.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
                     <!-- <input type="text" name="referencia" id="referencia"> -->
                 </label>
                 <label for="producto">
                     <span>Nombre del producto</span>
-                    {{ product_form.product_name() }}
+                    {{ product_form.product_name(id="producto") }}
+                    {% for error in product_form.product_name.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
                     <!-- <input type="text" name="producto" id="producto"> -->
                 </label>
                 <label for="precio">
                     <span>Precio</span>
-                    {{ product_form.price() }}
+                    {{ product_form.price(id="precio") }}
+                    {% for error in product_form.price.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
                     <!-- <input type="text" name="precio" id="precio"> -->
                 </label>
                 <label for="cantidad">
                     <span>Cantidad</span>
-                    {{ product_form.qty() }}
+                    {{ product_form.qty(id="cantidad") }}
+                    {% for error in product_form.qty.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
                     <!-- <input type="text" name="cantidad" id="cantidad"> -->
                 </label>
                 <label for="foto" class="flex-label">
@@ -65,16 +92,23 @@
                         Examinar
                     </label>
                     {{ product_form.photo(id="file-upload") }}
+                    
                     <!-- <input id="file-upload" type="file"/> -->
                 </label>
+                {% for error in product_form.photo.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+                {{ product_form.create_button(class="button") }}
+                {{ product_form.update_button(class="button non-critical", onClick="warning();") }}
+                {{ product_form.delete_button(class="button") }}
 
-                <button type="submit" class="button">Crear producto</button>
-                <button type="submit" class="button non-critical">Actualizar producto</button>
-                <button type="submit" class="button">Eliminar producto</button>
+                <!-- <button type="submit" class="button" name="crear">Crear producto</button>
+                <button type="submit" class="button non-critical" name="actualizar">Actualizar producto</button>
+                <button type="submit" class="button" name="eliminar">Eliminar producto</button> -->
             </form>
-            <figure>
+            <!-- <figure>
                 <img src={{ url_for('static', filename='images/logo_brioche.png') }} alt="Brioche logo">
-            </figure>
+            </figure> -->
         </aside>
         <div class="right-container">
             <div class="busqueda-container">
@@ -96,8 +130,7 @@
             </div>
         </div>
     </main>
-
-
+    
 
     {% endblock %}
 

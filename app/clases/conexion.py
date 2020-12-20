@@ -20,7 +20,7 @@ class Conexion:
         """Inicia la conexión con la base de datos."""
         try:
             self.conn = sqlite3.connect(self.db)
-            print("\nConexion exitosa\n")
+            # print("\nConexion exitosa\n")
             return self.conn
         except Error:
             print("\nError al conectar con la base de datos.\n")
@@ -29,7 +29,7 @@ class Conexion:
         """Cierra la conexión con la base de datos."""
         if self.conn is not None:
             self.conn.close()
-            print("Conexion cerrada")
+            # print("Conexion cerrada")
 
 if __name__ == '__main__':
     con = Conexion()

@@ -54,7 +54,7 @@ class Usuario(UserMixin):
     def eliminar_cajero(self, cajero):
         """Llama a la clase Database para la eliminación de cajeros."""
         if self.tipo == 'administrador':
-            self.db.eliminar_cajero_db()
+            return self.db.eliminar_cajero_db()
 
 
     def agregar_producto(self, producto):
@@ -64,17 +64,30 @@ class Usuario(UserMixin):
             return self.db.agregar_producto_db(producto)
             
 
-
     def actualizar_producto(self, producto):
         """Llama a la clase Database para actualizar la información de un producto."""
         if self.tipo == 'administrador':
-            self.db.actualizar_producto_db(producto)
+            return self.db.actualizar_producto_db(producto)
 
 
     def eliminar_producto(self, producto):
         """Llama a la clase Database para eliminar un producto."""
         if self.tipo == 'administrador':
-            self.db.eliminar_producto_db(producto)
+            return self.db.eliminar_producto_db(producto)
+
+    def buscar_producto(self, referencia):
+        """ Busca un producto en la BBDD, retorna una tupla con los atributos en orden
+            (referencia, nombre, precio, unidades, foto) """
+
+        producto_data = self.db.buscar_producto(referencia)
+        if producto_data is None:
+            return None
+        
+        return {'referencia': producto_data[0],
+                'nombre': producto_data[1],
+                'precio': producto_data[2],
+                'unidades': producto_data[3],
+                'foto': producto_data[4]}
 
 
     def registrar_venta(self, venta):

@@ -36,7 +36,7 @@ html{
 }
 
 div.user-info{
-    margin: 0 10rem;
+    margin: 0 5rem;
 }
 .user-info a{
     text-decoration: none;
@@ -160,4 +160,9 @@ img.circle-image {
     border-radius: 8%;
     padding-right: 2rem;
     width: 110%;
+}
+
+.form .button.create{
+    height: 100%;
+    border-radius: 1rem;
 }

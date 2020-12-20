@@ -35,7 +35,7 @@ def login(): #ANTES ERA  show_main_menu()
 
     if login_form.validate_on_submit():
 
-        print('Datos tomados del formulario:\n User: {}\n Pass: {}'.format(login_form.username.data, login_form.password.data))
+        # print('Datos tomados del formulario:\n User: {}\n Pass: {}'.format(login_form.username.data, login_form.password.data))
 
         username = login_form.username.data  # Tomamos el username y pass ingresados al formulario
         password = login_form.password.data
@@ -55,10 +55,10 @@ def login(): #ANTES ERA  show_main_menu()
                 return redirect( url_for('show_cajero_menu') )
             
             else:
-                flash('Usuario y contraseña no coinciden. Vuelve a intentarlo.')
+                flash('Usuario y contraseña no coinciden. Vuelve a intentarlo.','warning')
 
         else:
-            flash('El usuario no existe')
+            flash('El usuario no existe','danger')
 
     return render_template('inicio.html', **context)
 
@@ -66,6 +66,7 @@ def login(): #ANTES ERA  show_main_menu()
 @login_required
 def logout():
     """ Logs the current user out. """
+    out_user = current_user.id
     logout_user()
-    flash('Buen día. Regresa pronto!')
+    flash('Buen día. Regresa pronto {}!'.format(out_user),'info')
     return redirect(url_for('auth.login'))
