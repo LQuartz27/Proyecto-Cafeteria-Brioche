@@ -1,0 +1,171 @@
+@import url('main.css');
+
+body {
+  background: #efefef;
+}
+
+.receipt {
+  margin: 50px auto;
+  padding: 10px 10px 20px 10px;
+  width: 3.8in;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 3px 5px 10px;
+}
+
+.receipt-header {
+  width: 100%;
+  height: 1in;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.receipt-header h1 {
+  font-size: 110px;
+  margin: 10px;
+}
+
+.receipt-header p {
+  margin: 5px 0;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.company-name {
+  letter-spacing: 1.5px !important;
+  font-size: 30px !important;
+}
+
+.date-invoice-id {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.receipt-info-header {
+  margin-bottom: 10px;
+}
+
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.description {
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-data p{
+  margin: 10px 0;
+}
+
+.data-end {
+  justify-content: flex-start;  /*flex-start*/
+  padding-left: 10px;  /* 20px*/
+}
+
+.long-div {
+  width: 50%;
+  justify-content: flex-start;
+}
+
+.item-desc-header {
+  border-top: 5px double #444;
+  border-bottom: 5px double #444;
+}
+
+.item-desc-footer p {
+  margin: 2px 0;
+}
+
+.subtotal {
+  padding-top: 5px;
+  border-top: 1px dashed #444;
+  margin-top: 5px;
+}
+
+.subtotal-val {
+  justify-content: flex-end;
+}
+
+.payment-desc {
+  margin: 6px 0;
+  padding-bottom: 5px;
+  border-bottom: 1px dashed #444;
+}
+
+.footer-desc {
+  width: 75%;
+  justify-content: flex-end;
+}
+
+.footer-desc p {
+  margin: 0;
+}
+
+.receipt-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 1in;
+  font-size: 15px;
+  margin-top: 10px;
+  border-top: 3px double #444;
+}
+
+.receipt-footer p {
+  margin: 3px 0;
+}
+
+.floating-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+.floating-buttons button {
+  margin: 0 5px;
+  background: #444;
+  color: #fff;
+  border: none;
+  padding: 5px;
+}
+
+.floating-buttons button:hover {
+  cursor: pointer;
+}
+
+@media print{
+  @page {
+    margin: 0;
+  }
+
+  body {
+    position: relative;
+    width: 3.5in;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+  }
+
+  .receipt {
+    margin: 0;
+    padding: 10px;
+    top: 0;
+    left: 0;
+    transform: none;
+    box-shadow: none;
+    visibility: visible;
+  }
+
+  .floating-buttons {
+    visibility: hidden;
+  }
+}

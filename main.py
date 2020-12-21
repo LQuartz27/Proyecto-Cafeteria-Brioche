@@ -12,10 +12,12 @@ from app.clases.database import Database
 
 from flask_login import login_required, current_user
 import os
+import sqlite3 #Temporal
+
 
 app = create_app()
 current_file_path = os.path.abspath(os.path.dirname(__file__))
-images_path = os.path.join(current_file_path, "app/uploaded_images/")
+images_path = os.path.join(current_file_path, "app/static/uploads/")
 
 
 @app.route('/')
@@ -79,8 +81,17 @@ def gestionar_productos():
         return redirect( url_for('show_cajero_menu') )
 
     product_form = ProductForm()
+    
+    current_user.db.conexion.iniciar()
+    cur = current_user.db.conexion.conn.cursor()
+    cur.execute('SELECT referencia, nombre, precio, unidades, foto FROM Productos')
+    itemData = cur.fetchall()
+    current_user.db.conexion.cerrar()
+    itemData = parse(itemData)
+    
     context = {
         'product_form' : product_form,
+        'itemData': itemData
     }
 
     if product_form.validate_on_submit():
@@ -90,7 +101,7 @@ def gestionar_productos():
         price = product_form.price.data
         qty = product_form.qty.data
         photo = product_form.photo.data
-
+        
         print('\nRequest form dentro del main:\n{}'.format(request.form))
         filename = photo.filename
 
@@ -98,7 +109,7 @@ def gestionar_productos():
             # flash('PRESIONE EL BOTON CREAR', 'info')
             # Nombrando la imagen que se guardará en el servidor (el path donde sera guardada)
             if filename:
-                save_filename = secure_filename(product_name+'_'+ref_number +'.'+ filename.rsplit('.',1)[1].lower())
+                save_filename = secure_filename(product_name +'.'+ filename.rsplit('.',1)[1].lower())
             else:
                 save_filename = 'coffee-shop.png'
 
@@ -143,7 +154,7 @@ def gestionar_productos():
                 # le asignamos el nombre que ya traía, para guardar la imagen
                 if not product_name:
                     product_name = ddbb_info['nombre']
-                save_filename = secure_filename(product_name+'_'+ref_number +'.'+ filename.rsplit('.',1)[1].lower())
+                save_filename = secure_filename(ref_number +'.'+ filename.rsplit('.',1)[1].lower())
                 file_path = os.path.join(images_path, save_filename)
             else:
                 save_filename = filename
@@ -247,12 +258,280 @@ def recuperar_cuenta():
 @app.route('/venta', methods=['GET','POST'])
 @login_required
 def vender():
-    return render_template('ventas.html')
+    return render_template('venta.html')
 
 @app.route('/galeria', methods=['GET','POST'])
 @login_required
 def show_galeria():
     return render_template('galeria.html')
+
+
+
+@app.route('/ventas', methods=['GET','POST'])
+@login_required
+def show_ventas():	
+    
+    current_user.db.conexion.iniciar()
+    cur = current_user.db.conexion.conn.cursor()
+    cur.execute('SELECT referencia, nombre, precio, unidades, foto FROM Productos')
+    itemData = cur.fetchall()
+    current_user.db.conexion.cerrar()
+    itemData = parse(itemData)
+    
+    """
+    with sqlite3.connect('database.db') as conn:
+        cur = conn.cursor()
+        cur.execute('SELECT referencia, nombre, precio, unidades, foto FROM Productos')
+        itemData = cur.fetchall()
+    conn.close()
+    print("antes del parse")
+    print(itemData)
+    itemData = parse(itemData)
+    print("after parse")
+    print(itemData)
+    """
+    return render_template('ventas.html', itemData=itemData, isLogged=True)
+
+@login_required
+def parse(data):
+    ans = []
+    i = 0
+    while i < len(data):
+        curr = []
+        for j in range(7):
+            if i >= len(data):
+                break
+            curr.append(data[i])
+            i += 1
+        ans.append(curr)
+    return ans
+
+
+def array_merge( first_array , second_array ):
+    if isinstance( first_array , list ) and isinstance( second_array , list ):
+        return first_array + second_array
+    elif isinstance( first_array , dict ) and isinstance( second_array , dict ):
+        return dict( list( first_array.items() ) + list( second_array.items() ) )
+    elif isinstance( first_array , set ) and isinstance( second_array , set ):
+        return first_array.union( second_array )
+    return False
+
+
+@app.route('/agregar', methods=['POST'])
+@login_required
+def agregar_prod():
+	
+    if request.method =='POST':
+        cant = int(request.form['cant'])
+        referencia = int(request.form['referencia'])
+        nombre = request.form['nombre']
+        precio = int(request.form['precio'])
+        stock = int(request.form['stock'])
+        foto = request.form['foto']
+        totalp = 0
+        totalp = cant * precio
+        
+        aProd = { 
+            str(referencia) : {
+                'nombre' : nombre,
+                'referencia' : referencia,
+                'cantidad' : cant,
+                'precio' : precio,
+                'stock' : stock,
+                'foto' : foto,
+                'pTotal': totalp
+            }
+        }
+        
+        cant_prod_total = 0
+        precio_prod_total = 0
+        session.modified = True
+        
+        if 'lst_compra' in session:
+            #--Ya Existe el carrito
+            if str(referencia) in session['lst_compra']:
+                #--Ya Existe la referencia en el carrito
+                for key, value in session['lst_compra'].items():
+                    if str(referencia) == key:
+                        cant_ant = session['lst_compra'][key]['cantidad']
+                        total_cant = cant_ant + cant
+                        session['lst_compra'][key]['cantidad'] = total_cant
+                        session['lst_compra'][key]['pTotal'] = total_cant * precio
+            else:
+                #--No Existe la referencia en el carrito
+                session['lst_compra'] = array_merge(session['lst_compra'], aProd) #agregado
+            
+            for key, value in session['lst_compra'].items():
+                cant_ref = session['lst_compra'][key]['cantidad']
+                pTotal_ref = session['lst_compra'][key]['pTotal']
+                cant_prod_total += cant_ref
+                precio_prod_total += pTotal_ref
+            
+        else:
+            #--No Existe el carrito
+            session['lst_compra'] = aProd
+            cant_prod_total += cant
+            precio_prod_total += cant * precio
+            
+        session['cant_prod_total'] = cant_prod_total
+        session['precio_prod_total'] = precio_prod_total 
+        
+        flash("--cantidades--")
+        flash(session['cant_prod_total'])
+        flash("--precio total--")
+        flash(session['precio_prod_total'])
+        flash("--lista--")
+        flash(session['lst_compra'])
+        
+    return redirect(url_for('show_ventas'))
+
+
+@app.route('/borrar/<string:ref>')
+@login_required
+def borrar_producto(ref):
+    try:
+        cant_prod_total = 0
+        precio_prod_total = 0
+        session.modified = True
+		
+        for item in session['lst_compra'].items():
+            if item[0] == ref:				
+                session['lst_compra'].pop(item[0], None)
+                if 'lst_compra' in session:
+                    for key, value in session['lst_compra'].items():
+                        cant_ref = session['lst_compra'][key]['cantidad']
+                        pTotal_ref = session['lst_compra'][key]['pTotal']
+                        precio_prod_total += pTotal_ref
+                        cant_prod_total += cant_ref
+                break
+		
+        if precio_prod_total == 0:
+            borrar_venta()
+        else:
+            session['precio_prod_total'] = precio_prod_total
+            session['cant_prod_total'] = cant_prod_total
+		
+        return redirect(url_for('show_ventas'))
+    except Exception as e:
+        print(e)
+
+@app.route('/reg_venta')
+@login_required
+def reg_venta():
+    nFac = 0
+    #--Registra en BD (Ventas) los datos generales guardados en la sesión y genera un número de factura
+    print("///////////////////////////DICT////////////////////")
+    print(session.__dict__)
+    print("///////////////////////////LST_COMPRA////////////////////")
+    print(session['lst_compra'])
+    print("//////////////////////cantidad total/////////////////////////")
+    print(session['cant_prod_total'])
+    print("///////////////////////////precio total////////////////////")
+    print(session['precio_prod_total'])
+    
+    
+    try:
+        current_user.db.conexion.iniciar()
+        cur = current_user.db.conexion.conn.cursor()
+        cur.execute("INSERT INTO Ventas (usuario, fecha, cliente, cantidades, total) VALUES (?, julianday('now'), ?, ?, ?)",(current_user.id, "pedro perez", session['cant_prod_total'], session['precio_prod_total']))
+        current_user.db.conexion.conn.commit()
+        nFac = cur.lastrowid
+        current_user.db.conexion.cerrar()   
+    except Exception as e:
+        print(e)
+    """ 
+    
+    with sqlite3.connect('database.db') as conn:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO Ventas (usuario, fecha, cliente, cantidades, total) VALUES (?, julianday('now'), ?, ?, ?)",("Current_user.id", "pedro perez", session['cant_prod_total'], session['precio_prod_total']))
+        nFac = cur.lastrowid
+    conn.close()
+    """
+    print("EL NUMERO DE FACTURA ES: " + str(nFac))
+    
+    #--Registra en BD (Detalle) el detalle de cada referencia vendida guardados en la sesión.
+    for key, value in session['lst_compra'].items():
+        ref = session['lst_compra'][key]['referencia']
+        nombre = session['lst_compra'][key]['nombre']
+        precio = session['lst_compra'][key]['precio']
+        cant = session['lst_compra'][key]['cantidad']
+        pTotal = session['lst_compra'][key]['pTotal']
+        
+        current_user.db.conexion.iniciar()
+        cur = current_user.db.conexion.conn.cursor()
+        cur.execute("INSERT INTO Detalle (factura, referencia, nombre, precio, cantidad, total) VALUES (?, ?, ?, ?, ?, ?)",(nFac, ref, nombre, precio, cant, pTotal))
+        current_user.db.conexion.conn.commit()
+        current_user.db.conexion.cerrar()
+
+        """
+        with sqlite3.connect('database.db') as conn:
+            cur = conn.cursor() 
+            cur.execute("INSERT INTO Detalle (factura, referencia, nombre, precio, cantidad, total) VALUES (?, ?, ?, ?, ?, ?)",(nFac, ref, nombre, precio, cant, pTotal))
+        conn.close()
+        """
+    borrar_lst_compra()
+    return redirect(url_for('gen_factura', nFac=nFac))
+    
+@login_required
+def borrar_lst_compra():
+    session.pop('lst_compra', None)
+    session.pop('cant_prod_total', None)
+    session.pop('precio_prod_total', None)
+
+
+@app.route('/vaciar')   #temporal, modificar
+@login_required
+def vaciar():
+    borrar_lst_compra()
+    return redirect(url_for('show_ventas'))
+
+@app.route("/factura/<nFac>")
+@login_required
+def gen_factura(nFac):
+    #--Recupera datos de BD(Ventas) con el numero de factura dado.
+    current_user.db.conexion.iniciar()
+    cur = current_user.db.conexion.conn.cursor()
+    cur.execute("SELECT usuario, cliente, date(fecha), time(fecha), cantidades, total FROM Ventas WHERE numero=?",[nFac])
+    factData = cur.fetchone()       
+    current_user.db.conexion.cerrar()
+    
+    """
+    with sqlite3.connect('database.db') as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT usuario, cliente, date(fecha), time(fecha), cantidades, total FROM Ventas WHERE numero=?",[nFac])
+        factData = cur.fetchone()
+    conn.close()
+    
+    #usuario 0, cliente 1, date(fecha) 2, time(fecha) 3, cantidades 4, total 5
+    print("/////////////////////////////////////////////////////////")
+    print("LA FACTURA ES: " + str(nFac) +" - Fecha: " + factData[2] +" - Hora: "+ factData[3])
+    print("/////////////////////////////////////////////////////////")
+    print("DATOS GENERALES - lista")
+    print(factData)
+    print("/////////////////////////////////////////////////////////")
+    """
+    #--Recupera detalle de factura de BD(Ventas) con el numero de factura dado.
+    current_user.db.conexion.iniciar()
+    cur = current_user.db.conexion.conn.cursor()
+    cur.execute("SELECT referencia, nombre, precio, cantidad, total FROM Detalle WHERE factura=?",[nFac])
+    factDetail = cur.fetchall()       
+    current_user.db.conexion.cerrar()
+
+    """
+    with sqlite3.connect('database.db') as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT referencia, nombre, precio, cantidad, total FROM Detalle WHERE factura=?",[nFac])
+        factDetail = cur.fetchall()
+    conn.close()
+    
+    #referencia 0, nombre 1, precio 2, cantidad 3, total 4
+    print("/////////////////////////////////////////////////////////")
+    print("detalle de factura")
+    print(factDetail)
+    print("/////////////////////////////////////////////////////////")
+    """
+    return render_template('factura.html',  nFact=nFac, factData=factData, factDetail=factDetail)
+
 
 
 if __name__ == "__main__":

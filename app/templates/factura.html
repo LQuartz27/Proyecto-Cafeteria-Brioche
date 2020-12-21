@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+  <title>FACTURA DE VENTA</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/receipt.css') }}">
+</head>
+
+{% set factura =  factData%}
+
+<body>
+  <!-- Floating Input -->
+  <div class="floating-buttons">
+	<a href="{{ url_for('show_ventas') }}"><button>Ir a Ventas</button></a>
+    <button onClick="print()">Imprimir</button>
+  </div>
+
+  <div class="receipt">
+    <!-- Receipt Header -->
+    <div class="receipt-header">
+      <h1 class="company-name">CAFETERÍA BRIOCHE</h1>
+      <p>Km 5 Vía Puerto Colombia</p>
+      <p>Barranquilla, Colombia</p>
+    </div>
+
+	<br>
+
+    <!-- Receipt Body -->
+    <div class="receipt-info">
+      <div class="receipt-info-header">
+        <div class="date-invoice-id">
+          <span>Factura # {{ nFact }}</span>
+          <span>{{ factura[2] }}</span>
+        </div>
+        <div class="date-invoice-id">
+          <span>Vendedor: {{ factura[0] }}</span>
+          <span>{{ factura[3] }}</span>
+        </div>
+      </div>
+
+      <div class="purchases">
+        <!-- Purchases HEADER -->
+        <div class="item item-desc-header">
+          <div class="description">
+            <p>Cant.</p>
+          </div>
+
+          <div class="description long-div">
+            <p>Producto</p>
+          </div>
+
+          <div class="description">
+            <p>Total</p>
+          </div>
+        </div>
+
+        <!-- PURCHASES LIST -->
+        {% for art in factDetail %}
+        <div class="item">
+          <div class="description item-data">
+            <p>{{ art[3] }}</p>
+          </div>
+
+          <div class="description item-data long-div">
+            <p>{{ art[1] }}</p>
+          </div>
+
+          <div class="description item-data">
+            <p>&dollar;{{ art[4] }}</p>
+          </div>
+        </div>
+        {% endfor %}
+
+        <!-- PURCHASES FOOTER -->
+        <div class="item item-desc-footer subtotal">
+          <div class="description">
+            <p>{{ factura[4] }}</p>
+          </div>
+
+          <div class="description subtotal-val long-div">
+            <p>Subtotal</p>
+          </div>
+
+          <div class="description">
+            <p>&dollar;{{ factura[5] }}</p>
+          </div>
+        </div>
+
+        <div class="item item-desc-footer payment-desc">
+          <div class="description footer-desc">
+            <p>Pago</p>
+          </div>
+
+          <div class="description footer-data">
+            <p>&dollar;{{ factura[5] }}</p>
+          </div>
+        </div>
+
+        <div class="item item-desc-footer">
+          <div class="description footer-desc">
+            <p>Cambio</p>
+          </div>
+
+          <div class="description footer-data">
+            <p>&dollar;0</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Receipt Footer -->
+    <div class="receipt-footer">
+      <p>¡GRACIAS POR SU COMPRA!</p>
+	  <p>Vuelva pronto.</p>
+    </div>
+  </div>
+</body>
+</html>

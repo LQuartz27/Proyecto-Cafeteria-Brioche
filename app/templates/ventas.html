@@ -1,189 +1,106 @@
 {% extends "template.html" %}
-
-{% block link %}<link rel="stylesheet" href={{ url_for('static',filename='styles/estilos.css') }}>{% endblock %}
-
+{% block link %}<link rel="stylesheet" href={{ url_for('static',filename='styles/estilos.css') }}> <link rel="stylesheet" href={{ url_for('static',filename='styles/es.css') }}>{% endblock %}
 {% block title %}Brioche ☕ - Ventas{% endblock %}
+
+
 
 {% block body %}
 
-<center>
-  <div class="cuerpo hventas">
-    <div class="lateral1">
-      <table width="90%" border="0">
-        <tr>
-          <td class="busqueda" colspan="2"><strong>Buscar</strong></td>
-          </tr>
-        <tr>
-          <td colspan="2"><input class="tbbuscar" id="buscar" type="text"/></td>
-          </tr>
-        <tr>
-          <td width="50%" height="28" align="center" valign="bottom" class="busqueda">Croissant</td>
-          <td width="50%" align="center" valign="bottom" class="busqueda">Latte</td>
-          </tr>
-        <tr>
-          <td align="center" valign="middle"><img src={{ url_for('static', filename='images/croissant.png') }} alt="Croissant" class="prod"></td>
-          <td align="center" valign="middle"><img src={{ url_for('static', filename='images/late.png') }} alt="Late" class="prod"></td>
-        </tr>
-        <tr>
-          <td height="25" align="center" valign="bottom" class="busqueda">Brownie</td>
-          <td align="center" valign="bottom">&nbsp;</td>
-        </tr>
-        <tr>
-          <td align="center" valign="middle"><img src={{ url_for('static', filename='images/brownie.png') }} alt="Brownie" class="prod"></td>
-          <td align="center" valign="middle">&nbsp;</td>
-        </tr>
-      </table>
-    </div>
+    {% for message in get_flashed_messages() %}
+            {{ message }}
+    {% endfor %}
 
-    <div class="centro1">
-      <div align="center" class="formulario">
-        <form>
-            <label for="fname"><br>
-              <p1 class="nuevaVenta"> Nueva venta</p1> 
-              <br>
-              <br></label>
-        
-            <table width="98%" border="0">
-              <tr>
-                <td width="7%"><em>Fecha</em></td>
-                <td width="21%"><input class="tbprot" type="text" id="fecha"></td>
-                <td width="24%">&nbsp;</td>
-                <td colspan="2" align="right"><em>Factura Número </em></td>
-                <td width="25%"><input class="tbprot" type="text" id="factura"></td>
-              </tr>
-              <tr>
-                <td colspan="3" valign="bottom"><em>Nombre Cliente</em></td>
-                <td width="8%">&nbsp;</td>
-                <td width="15%" align="right"><em>Usuario</em></td>
-                <td><input class="tbprot" type="text" id="nuser" placeholder={{ current_user.id }}></td>
-              </tr>
-              <tr>
-                <td colspan="3"><input class="tbtxt" type="text" id="nclient"></td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
-            </table>
-            <br>
-            <table width="98%" border="0">
-              <tr>
-                <td width="9%" scope="col"><em>Cant</em>
-                  </th>
-                <td width="9%" scope="col"><em>Ref.</em>
-                  </th>
-                <td width="46%" scope="col"><em>Nombre del Producto</em>
-                  </th>
-                <td width="18%" scope="col"><em>Valor Unit.</em>
-                  </th>
-                <td width="18%" scope="col"><em>Valor Total</em>
-                  </th>        </tr>
-              <tr>
-                <td><input class="tbcant" type="number" id="cant1"></td>
-                <td><input class="tbcant" type="text" id="ref1"></td>
-                <td><input class="tbtxt" type="text" id="prod1"></td>
-                <td><input class="tbcant" type="number" id="unit1"></td>
-                <td><input class="tbcant" type="number" id="total1"></td>
-              </tr>
-              <tr>
-                <td><input class="tbcant" type="number" id="cant2"></td>
-                <td><input class="tbcant" type="text" id="ref2"></td>
-                <td><input class="tbtxt" type="text" id="prod2"></td>
-                <td><input class="tbcant" type="number" id="unit2"></td>
-                <td><input class="tbcant" type="number" id="total2"></td>
-              </tr>
-              <tr>
-                <td><input class="tbcant" type="number" id="cant3"></td>
-                <td><input class="tbcant" type="text" id="ref3"></td>
-                <td><input class="tbtxt" type="text" id="prod3"></td>
-                <td><input class="tbcant" type="number" id="unit3"></td>
-                <td><input class="tbcant" type="number" id="total3"></td>
-              </tr>
-              <tr>
-                <td><input class="tbcant" type="number" id="cant4"></td>
-                <td><input class="tbcant" type="text" id="ref4"></td>
-                <td><input class="tbtxt" type="text" id="prod4"></td>
-                <td><input class="tbcant" type="number" id="unit4"></td>
-                <td><input class="tbcant" type="number" id="total4"></td>
-              </tr>
-              <tr>
-                <td><input class="tbcant" type="number" id="cant5"></td>
-                <td><input class="tbcant" type="text" id="ref5"></td>
-                <td><input class="tbtxt" type="text" id="prod5"></td>
-                <td><input class="tbcant" type="number" id="unit5"></td>
-                <td><input class="tbcant" type="number" id="total5"></td>
-              </tr>
-              <tr>
-                <td><input class="tbcant" type="number" id="cant6"></td>
-                <td><input class="tbcant" type="text" id="ref6"></td>
-                <td><input class="tbtxt" type="text" id="prod6"></td>
-                <td><input class="tbcant" type="number" id="unit6"></td>
-                <td><input class="tbcant" type="number" id="total6"></td>
-              </tr>
-              <tr>
-                <td><input class="tbcant" type="number" id="cant7"></td>
-                <td><input class="tbcant" type="text" id="ref7"></td>
-                <td><input class="tbtxt" type="text" id="prod7"></td>
-                <td><input class="tbcant" type="number" id="unit7"></td>
-                <td><input class="tbcant" type="number" id="total7"></td>
-              </tr>
-              <tr>
-                <td><input class="tbcant" type="number" id="cant8"></td>
-                <td><input class="tbcant" type="text" id="ref8"></td>
-                <td><input class="tbtxt" type="text" id="prod8"></td>
-                <td><input class="tbcant" type="number" id="unit8"></td>
-                <td><input class="tbcant" type="number" id="total8"></td>
-              </tr>
-              <tr>
-                <td><input class="tbcant" type="number" id="cant9"></td>
-                <td><input class="tbcant" type="text" id="ref9"></td>
-                <td><input class="tbtxt" type="text" id="prod9"></td>
-                <td><input class="tbcant" type="number" id="unit9"></td>
-                <td><input class="tbcant" type="number" id="total9"></td>
-              </tr>
-              <tr>
-                <td><input class="tbcant" type="number" id="cant10"></td>
-                <td><input class="tbcant" type="text" id="ref10"></td>
-                <td><input class="tbtxt" type="text" id="prod10"></td>
-                <td><input class="tbcant" type="number" id="unit10"></td>
-                <td><input class="tbcant" type="number" id="total10"></td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td align="right"><em>Subtotal: </em></td>
-                <td><input class="tbprot" type="number" id="valorSub"></td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td align="right"><em>IVA: </em></td>
-                <td><input class="tbprot" type="number" id="valorIva"></td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td align="right"><em>Total: </em></td>
-                <td><input class="tbprot" type="number" id="valorTotal"></td>
-              </tr>
-            </table>
-            <br>
-          </form>  
+    <div class="cuerpo1">
+        <div class="galeria1">
+            <div class="galeria-cuadro1">Galería de productos</div>
+            <div class="imagenes1">
+			{% for data in itemData%}
+				{% for row in data %}
+			    <div class="producto1">
+                    <div class="nombre1">{{row[1]}}</div>
+					<div class="gcontainer">
+						<img class="imagen1" src={{ url_for('static', filename='uploads/' + row[4]) }} alt="producto" style="width:100%;"/>
+						<div class="text-block">
+							<h4>$ {{row[2]}}</h4>
+						</div>
+					</div>
+                    <div class="abajo1">
+					{%if row[3] > 0 %}
+						<form method="post" action="/agregar">
+							<input type="hidden" name="referencia" value="{{row[0]}}"/>
+							<input type="hidden" name="nombre" value="{{row[1]}}"/>
+							<input type="hidden" name="precio" value="{{row[2]}}"/>
+							<input type="hidden" name="stock" value="{{row[3]}}"/>
+							<input type="hidden" name="foto" value="{{row[4]}}"/>
+							<input class="tbcant1" name="cant" type="number" value="1"> &nbsp <input type="submit" class="btnAdd" value="Agregar"/>
+						</form>
+						
+                    {% else %}
+						<div class="cantidad1">Sin stock</div>
+					{% endif %}
+					
+					</div>
+                </div>	
+				{% endfor %}
+			{% endfor %}
+			</div>
+			 <div class="galeria-cuadro1"> &nbsp </div>
+		</div>
+		
+		<!---->
+		
+		
+		<div class="centro1">
+		  	<div id="shopping-cart">
+				<div class="txt-heading">Nueva Venta</div>		
+				{% if 'lst_compra' in session %}
+					<a id="btnEmpty" href="{{ url_for('vaciar') }}">Borrar venta</a>
+					<table class="tbl-cart" cellpadding="10" cellspacing="1">
+					<tbody>
+						<tr>
+							<th style="text-align:left;">Nombre</th>
+							<th style="text-align:left;">Referencia</th>
+							<th style="text-align:right;" width="5%">Cantidad</th>
+							<th style="text-align:right;" width="10%">Precio unitario</th>
+							<th style="text-align:right;" width="10%">Total</th>
+							<th style="text-align:center;" width="5%">Eliminar</th>
+						</tr>
+						{% for key, val in session['lst_compra'].items() %}
+							{% set cantidad = session['lst_compra'][key]['cantidad'] %}
+							{% set precio = session['lst_compra'][key]['precio'] %}
+							{% set pTotal = session['lst_compra'][key]['pTotal'] %}					
+							<tr>
+								<td><img src="/static/uploads/{{ session['lst_compra'][key]['foto'] }}" class="cart-item-image" />{{ session['lst_compra'][key]['nombre'] }}</td>
+								<td>{{ session['lst_compra'][key]['referencia'] }}</td>
+								<td style="text-align:right;">{{ cantidad }}</td>
+								<td  style="text-align:right;">&dollar; {{ precio }}</td>
+								<td  style="text-align:right;">&dollar; {{ pTotal }}</td>
+								<td style="text-align:center;">
+									<a href="{{ url_for('.borrar_producto', ref=session['lst_compra'][key]['referencia']) }}" class="btnRemoveAction">Eliminar</a>
+								</td>
+							</tr>
+						{% endfor %}
+						<tr>
+							<td colspan="2" align="right">Total:</td>
+							<td align="right">{{ session['cant_prod_total'] }}</td>
+							<td align="right" colspan="2"><strong>&dollar; {{ session['precio_prod_total'] }}</strong></td>
+							<td></td>
+						</tr>
+					</tbody>
+					</table>
+				{% else: %}
+					<div class="no-records">No se han agregado productos</div>
+				{% endif %}
+			</div>
         </div>
     </div>
-
-    <div class="lateral2">
-
-      <a class="boton aceptar">Registrar</a>
-      {% if current_user.tipo == 'cajero' %}
-      <a class="boton cancelar" href="{{ url_for('show_cajero_menu') }}">Cancelar</a>
-      {% elif current_user.tipo == 'administrador' %}
-      <a class="boton cancelar" href="{{ url_for('show_admin_menu') }}">Cancelar</a>
-      {% endif %}
-    
-    </div>
-  </div>
-</center>
+		
+		
+		<!--
+        <div class="botones1">
+            <a class="boton1 aceptar1" href="{{ url_for('vender') }}">Aceptar</a>
+            <a class="boton1 cancelar1" href="{{ url_for('vender') }}">Cancelar</a>
+        </div>
+	</div>-->
+	
 {% endblock %}

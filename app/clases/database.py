@@ -58,14 +58,14 @@ class Database:
         self.conexion.iniciar()
         cur = self.conexion.conn.cursor()
 
-        query = "INSERT INTO Productos VALUES (?, ?, ?, ?, ?)"
+        query = "INSERT INTO Productos (nombre, precio, unidades, foto) VALUES (?, ?, ?, ?)"
 
         for product in lista_productos:
             if producto.referencia in product or producto.nombre in product:
                 print("Error, referencia o nombre ya existe en la base de datos.")
                 return False
 
-        cur.execute(query, (producto.referencia, producto.nombre, producto.precio, producto.unidades, producto.foto))
+        cur.execute(query, (producto.nombre, producto.precio, producto.unidades, producto.foto))
         self.conexion.conn.commit()
 
         self.conexion.cerrar()
