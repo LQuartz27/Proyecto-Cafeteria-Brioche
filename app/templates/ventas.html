@@ -25,19 +25,19 @@
 						</div>
 					</div>
                     <div class="abajo1">
-					{%if row[3] > 0 %}
-						<form method="post" action="/agregar">
-							<input type="hidden" name="referencia" value="{{row[0]}}"/>
-							<input type="hidden" name="nombre" value="{{row[1]}}"/>
-							<input type="hidden" name="precio" value="{{row[2]}}"/>
-							<input type="hidden" name="stock" value="{{row[3]}}"/>
-							<input type="hidden" name="foto" value="{{row[4]}}"/>
-							<input class="tbcant1" name="cant" type="number" value="1"> &nbsp <input type="submit" class="btnAdd" value="Agregar"/>
-						</form>
-						
-                    {% else %}
-						<div class="cantidad1">Sin stock</div>
-					{% endif %}
+						{%if row[3] > 0 %}
+							<form method="post" action="/agregar">
+								<input type="hidden" name="referencia" value="{{row[0]}}"/>
+								<input type="hidden" name="nombre" value="{{row[1]}}"/>
+								<input type="hidden" name="precio" value="{{row[2]}}"/>
+								<input type="hidden" name="stock" value="{{row[3]}}"/>
+								<input type="hidden" name="foto" value="{{row[4]}}"/>
+								<input class="tbcant1" name="cant" type="number" value="1"> &nbsp <input type="submit" class="btnAdd" value="Agregar"/>
+							</form>
+							
+						{% else %}
+							<div class="cantidad1">Sin stock</div>
+						{% endif %}
 					
 					</div>
                 </div>	
@@ -88,6 +88,7 @@
 						</tr>
 					</tbody>
 					</table>
+					<a class="hboton tsalir" href="{{ url_for('reg_venta') }}">Registrar Venta</a> 
 				{% else: %}
 					<div class="no-records">No se han agregado productos</div>
 				{% endif %}

@@ -30,7 +30,9 @@
     </form>
     <br>
     <!-- <input class="botons1" type="submit" value="Acceder" form='login-form'> -->
-    {{ rec_form.submit(class="botons1", form='rec-form' ) }}
+    {{ rec_form.submit(class="botons1", form='rec-form', style="color: #CFE8C1" ) }}
+    <br>
+    <button class="botons1"><a href="{{ url_for('auth.login') }}" style="color: #CFE8C1; font-size: 15px">Regresar</a></button> 
   </section>
 </body>
 </html>
