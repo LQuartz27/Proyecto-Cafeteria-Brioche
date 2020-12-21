@@ -74,6 +74,9 @@
                 <label for="email">
                     <span>Correo electrónico</span>
                     {{ new_cashier_form.email(placeholder='Correo electrónico', id="email") }}
+					{% for error in new_cashier_form.email.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
                     <!-- <input type="email" name="email" id="email"> -->
                 </label>
                 <div class="buttons-container">

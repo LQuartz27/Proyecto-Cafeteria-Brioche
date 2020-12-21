@@ -121,20 +121,35 @@
                 </form>
             </div>
             <div class="gallery-container">
-                <img src={{ url_for('static', filename='images/coca_cola.png') }} alt="producto 1">
-                <img src={{ url_for('static', filename='images/dona.png') }} alt="producto 2">
-                <img src={{ url_for('static', filename='images/croissant.png') }} alt="producto 3">
-                <img src={{ url_for('static', filename='images/late.png') }} alt="producto 4">
-                <img src={{ url_for('static', filename='images/pan.png') }} alt="producto 5">
-                <img src={{ url_for('static', filename='images/brownie.png') }} alt="producto 6">
+				
+				{% for data in itemData%}
+					{% for row in data %}
+                        <div class="imagenes1">
+                            <div class="producto1">
+                                <div class="nombre1">{{row[1]}}</div>
+                                <div class="gcontainer">
+                                    <img class="imagen1" src={{ url_for('static', filename='uploads/' + row[4]) }} alt="producto" />
+                                    <div class="text-block">
+                                        <h4>$ {{row[2]}}</h4>
+                                    </div>
+                                </div>
+                            </div>	
+                        </div>
+					{% endfor %}
+				{% endfor %}
             </div>
         </div>
     </main>
     
 
-    {% endblock %}
+{% endblock %}
 
-<!--    
+ <!---
 </body>
 </html>
+                <!---<img src={{ url_for('static', filename='images/dona.png') }} alt="producto 2">
+                <img src={{ url_for('static', filename='images/croissant.png') }} alt="producto 3">
+                <img src={{ url_for('static', filename='images/late.png') }} alt="producto 4">
+                <img src={{ url_for('static', filename='images/pan.png') }} alt="producto 5">
+                <img src={{ url_for('static', filename='images/brownie.png') }} alt="producto 6">--->
 -->

@@ -22,7 +22,7 @@
 
   <section class="f-registro">
     <center><img src={{ url_for('static', filename='images/usuario_profile_img.png') }} style="width: 50px; height:50px"></center>
-    <h4>Recuperar contraseña</h4>
+    <h4>Recuperar cuenta</h4>
     <br>
     <form action="" method="post" id='rec-form'>
       {{ rec_form.hidden_tag() }}
@@ -30,7 +30,9 @@
     </form>
     <br>
     <!-- <input class="botons1" type="submit" value="Acceder" form='login-form'> -->
-    {{ rec_form.submit(class="botons1", form='rec-form' ) }}
+    {{ rec_form.submit(class="botons1", form='rec-form', style="color: #CFE8C1" ) }}
+    <br>
+    <button class="botons1"><a href="{{ url_for('auth.login') }}" style="color: #CFE8C1; font-size: 15px">Regresar</a></button> 
   </section>
 </body>
 </html>

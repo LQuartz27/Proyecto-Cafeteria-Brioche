@@ -38,7 +38,7 @@ class CustomCheck(object):
 
             numeric_check(field)
 
-            if field.name in ('ref_number','product_name','price','qty'):
+            if field.name in ('product_name','price','qty'):
                 return data_required.__call__(form, field)
 
 
@@ -62,13 +62,13 @@ class LoginForm(FlaskForm):
 class NewCashierForm(FlaskForm):
     username = StringField('Nombre de usuario', validators=[DataRequired()])
     password = PasswordField('Contraseña', validators=[DataRequired(), Length(min=8, message="Debe contener al menos 8 caracteres")])
-    email = StringField('Correo electrónico', validators=[DataRequired(), Email()])
+    email = StringField('Correo electrónico', validators=[DataRequired(), Email('Email inválido')])
     submit = SubmitField("Crear cajero")
 
 
 class ProductForm(FlaskForm):
 
-    ref_number = StringField('Numero de referencia', validators=[DataRequired(), CustomCheck()])
+    ref_number = StringField('Numero de referencia', validators=[CustomCheck()])
     product_name = StringField('Nombre del producto', validators=[CustomCheck()])
     price = StringField('Precio', validators=[CustomCheck()])
     qty = StringField('Cantidad', validators=[CustomCheck()])
