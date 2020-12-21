@@ -225,6 +225,18 @@ class Database:
         self.conexion.cerrar()
         return True
 
+    def actualizar_clave_usuario_db(self, correo, clave):
+        """Actualiza la clave de un usuario."""
+        self.conexion.iniciar()
+        cur = self.conexion.conn.cursor()
+
+        query = "UPDATE Usuarios SET clave=? WHERE correo=?"
+
+        cur.execute(query, (clave, correo))
+        print(clave, correo)
+        self.conexion.conn.commit()
+        self.conexion.cerrar()
+
     def eliminar_usuario(self, username):
         """ Elimina un usuario de la BBDD """
 

@@ -2,6 +2,8 @@ from flask import Flask, request, make_response, redirect, render_template, sess
 from flask_login import login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+import yagmail
+import random
 
 from app import create_app
 from app.forms import LoginForm, NewCashierForm, ProductForm, PasswordChangeForm, RecForm
@@ -63,6 +65,22 @@ def crear_cajero():
 
         if nuevo_cajero.crear_en_BBDD():
             flash('Se creó un nuevo cajero!','success')
+
+            # Mandar correo con las credenciales al cajero
+            admin_mail = "sergiorosas@uninorte.edu.co"
+            admin_password = "sergioBrioche1"
+            subject = "Credenciales para el ingreso a la plataforma"
+
+            yag = yagmail.SMTP(user=admin_mail, password=admin_password)
+
+            contents = ["Bienvenido a nuestra familia 'Brioche'",
+                        "¡Para nosotros es una gran alegría que trabajes con nosotros!",
+                        "Para ingresar a la plataforma debes digitar los siguientes datos:",
+                        f"Usuario: {username}",
+                        f"Contraseña: {password}",
+                        "Te recomendamos que una vez ingreses a la plataforma por primera vez, cambies tu contraseña."]
+            yag.send(email, subject, contents)
+
         else:
             flash('Error, usuario o correo ya existe en la base de datos.','danger')
                                                                         
@@ -217,6 +235,18 @@ def cambiar_clave():
 
         # Si la contraseña previa es válida, procedemos a hacer el cambio en BBDD
         if check_password_hash(current_user.clave, prev_pass):
+
+            # Se manda un correo confirmando el cambio de contraseña.
+            admin_mail = "sergiorosas@uninorte.edu.co"
+            admin_password = "sergioBrioche1"
+            subject = "Cambio de contraseña plataforma Brioche"
+
+            yag = yagmail.SMTP(user=admin_mail, password=admin_password)
+
+            contents = ["Has cambiado tú contraseña de usuario con éxito.",
+                        "Si no has sido tú, por favor comunícate con el administrador."]
+            yag.send(current_user.correo, subject, contents)
+
             # En BBDD guardamos únicamente la versión hasheada de la contraseña
             password_hash = generate_password_hash(new_pass)
             print('New hashpass', password_hash)
@@ -237,10 +267,45 @@ def cambiar_clave():
 @app.route('/recuperacion_cuenta', methods=['GET','POST'])
 def recuperar_cuenta():
     rec_form = RecForm()
+
     context = {
         'rec_form':rec_form,
     }
-    #(...)
+
+    if rec_form.validate_on_submit():
+        correo = rec_form.email._value()
+
+        conn = Conexion()
+        db = Database(conn)
+
+        usuarios = {}
+
+        password = random.sample("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 16)
+        password = "".join(password)
+
+        for usuario in db.listar_usuarios():
+            if usuario[3] == "cajero":
+                usuarios[usuario[2]] = usuario[0]
+
+        if correo in usuarios:
+
+            # Se manda un correo para recuperar la cuenta.
+            admin_mail = "sergiorosas@uninorte.edu.co"
+            admin_password = "sergioBrioche1"
+            subject = "Recuperación de cuenta plataforma Brioche"
+
+            yag = yagmail.SMTP(user=admin_mail, password=admin_password)
+
+            contents = ["Has solicitado que se reestablezca tu cuenta de Cafetería Brioche",
+                        "Podrás ingresar nuevamente con la siguiente contraseña:",
+                        f"Contraseña: {password}"]
+
+            yag.send(correo, subject, contents)
+
+            password_hash = generate_password_hash(password)
+            # print(password_hash, correo)
+            db.actualizar_clave_usuario_db(correo, password_hash)
+
     return render_template('recuperar_cuenta.html', **context)
 
 
