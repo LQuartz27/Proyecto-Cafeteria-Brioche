@@ -441,13 +441,14 @@ def agregar_prod():
         session['cant_prod_total'] = cant_prod_total
         session['precio_prod_total'] = precio_prod_total 
         
+        """
         flash("--cantidades--")
         flash(session['cant_prod_total'])
         flash("--precio total--")
         flash(session['precio_prod_total'])
         flash("--lista--")
         flash(session['lst_compra'])
-        
+        """
     return redirect(url_for('show_ventas'))
 
 
@@ -600,4 +601,5 @@ def gen_factura(nFac):
 
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    #app.run(port=5000, debug=True)
+    app.run(host='127.0.0.1', port=443, ssl_context=('micertificado.pem', 'llaveprivada.pem'))
